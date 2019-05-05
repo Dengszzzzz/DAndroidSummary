@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mIvCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showToast("O(∩_∩)O123456789~");
+                ToastUtils.showToast("O(∩_∩)O123456782229~");
             }
         });
     }
