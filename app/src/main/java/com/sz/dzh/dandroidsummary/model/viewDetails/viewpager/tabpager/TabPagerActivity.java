@@ -19,7 +19,6 @@ import butterknife.ButterKnife;
 /**
  * Created by dengzh on 2018/4/23.
  * TabLayout,ViewPager,fragment 演示
- * 1.TabLayout tabMode、指示条长度。
  */
 
 public class TabPagerActivity extends BaseActivity {
@@ -50,7 +49,7 @@ public class TabPagerActivity extends BaseActivity {
      */
     private void initData(){
         // 封装数据
-        for(int i = 0;i<6;i++){
+        for(int i = 0;i<5;i++){
             mTypeList.add(new EventTypeBean(i,"类型" + i,""));
         }
         for(int i = 0;i<mTypeList.size();i++){
@@ -66,7 +65,8 @@ public class TabPagerActivity extends BaseActivity {
          * TabLayout.setupWithViewPager(viewPager)，将TabLayout和Viewpager两者绑定在一起。
          * 实际上，是setupWithViewPager()方法底部调用PagerAdapter中的getPageTitle()方法实现联系。
          *
-         * 注意：setupWithViewPager 会执行 removeAllTabs,所以要放在tab设置前面关联。
+         * 注意：setupWithViewPager 会执行 removeAllTabs,然后重新new Tab，所以要在关联之后。
+         *      调用TabLayout.getTabAt(i)方法来设置title。或者在PagerAdapter的getPageTitle()返回标题。
          * */
         mTabLayout.setupWithViewPager(viewPager);
         //设置样式

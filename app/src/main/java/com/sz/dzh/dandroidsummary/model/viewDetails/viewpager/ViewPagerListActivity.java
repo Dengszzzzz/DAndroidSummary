@@ -1,6 +1,7 @@
 package com.sz.dzh.dandroidsummary.model.viewDetails.viewpager;
 
 import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
+import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabIndicatorActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabPagerActivity;
 
 /**
@@ -16,6 +17,7 @@ public class ViewPagerListActivity extends BaseListShowActivity {
     @Override
     protected void initData() {
         addClazzBean("TabLayout，ViewPager，Fragment",TabPagerActivity.class);
+        addClazzBean("TabLayout的指示器", TabIndicatorActivity.class);
        // addClazzBean("广告条 viewpager",BanPagerActivity.class);
         mAdapter.notifyDataSetChanged();
     }
