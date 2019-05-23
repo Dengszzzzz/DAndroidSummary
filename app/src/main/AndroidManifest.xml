@@ -63,6 +63,9 @@
         <activity android:name=".model.viewDetails.viewpager.ViewPagerListActivity" />
         <activity android:name=".model.viewDetails.viewpager.tabpager.TabPagerActivity" />
         <activity android:name=".model.viewDetails.viewpager.tabpager.TabIndicatorActivity" />
+        <activity android:name=".model.viewDetails.dialog.DialogUActivity" />
+        <activity android:name=".model.viewDetails.dialog.DialogListActivity" />
+        <activity android:name=".model.viewDetails.dialog.DialogFrActivity" />
     </application>
 
 </manifest>

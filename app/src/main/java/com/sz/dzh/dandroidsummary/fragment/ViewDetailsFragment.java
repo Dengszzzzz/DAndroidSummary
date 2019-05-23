@@ -15,6 +15,7 @@ import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
 import com.sz.dzh.dandroidsummary.base.BaseFragment;
 import com.sz.dzh.dandroidsummary.bean.ClazzBean;
+import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.DialogListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.ViewPagerListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabPagerActivity;
 
@@ -57,6 +58,9 @@ public class ViewDetailsFragment extends BaseFragment {
     private void initView() {
 
         mList.add(new ClazzBean("ViewPager",ViewPagerListActivity.class));
+        mList.add(new ClazzBean("Dialog",DialogListActivity.class));
+
+
 
         mAdapter = new BaseListAdapter(mList);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

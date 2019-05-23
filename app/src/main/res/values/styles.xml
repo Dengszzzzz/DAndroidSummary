@@ -29,4 +29,21 @@
     </style>
 
 
+    <!--透明对话框，为了解决Dialog和窗口的间隙问题 -->
+    <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+    <!--对话框动画-->
+    <style name="main_menu_animstyle">
+        <item name="android:windowEnterAnimation">@anim/dialog_in_from_bottom_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out_from_bottom_anim</item>
+    </style>
+    <!--全屏对话框-->
+    <style name="Dialog.FullScreen" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+
 </resources>
