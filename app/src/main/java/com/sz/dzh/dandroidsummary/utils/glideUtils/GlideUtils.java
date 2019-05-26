@@ -80,7 +80,7 @@ public class GlideUtils {
             if (!isUiThread()) return;
             RequestOptions options = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)   //在load()和into()之间，可以串连添加各种功能。
-                    .transform(new GlideRoundTransform(v.getContext(), round));
+                    .transform(new GlideRoundTransform(round));
             Glide.with(context)
                     .load(url)
                     .apply(options)
@@ -98,7 +98,7 @@ public class GlideUtils {
             if (!isUiThread()) return;
             RequestOptions options = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)   //在load()和into()之间，可以串连添加各种功能。
-                    .transform(new GlideRoundTransform(v.getContext(), round));
+                    .transform(new GlideRoundTransform(round));
             Glide.with(context)
                     .load(resourceId)
                     .apply(options)
@@ -120,7 +120,7 @@ public class GlideUtils {
             if (!isUiThread()) return;
             RequestOptions options = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)   //在load()和into()之间，可以串连添加各种功能。
-                    .transform(new GlideCircleTransform(v.getContext()));
+                    .transform(new GlideCircleTransform());
             Glide.with(context)
                     .load(url)
                     .apply(options)
@@ -142,7 +142,7 @@ public class GlideUtils {
             if (!isUiThread()) return;
             RequestOptions options = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)   //在load()和into()之间，可以串连添加各种功能。
-                    .transform(new GlideCircleTransform(v.getContext()));
+                    .transform(new GlideCircleTransform());
             Glide.with(context)
                     .load(resourceId)
                     .apply(options)
@@ -176,7 +176,7 @@ public class GlideUtils {
                     .error(R.mipmap.ic_launcher_round)
                     .placeholder(R.mipmap.ic_launcher_round)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)   //在load()和into()之间，可以串连添加各种功能。
-                    .transform(new GlideCircleTransform(v.getContext()));
+                    .transform(new GlideCircleTransform());
             Glide.with(context)
                     .load(url)
                     .apply(options)

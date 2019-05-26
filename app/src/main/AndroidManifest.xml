@@ -66,6 +66,9 @@
         <activity android:name=".model.viewDetails.dialog.DialogUActivity" />
         <activity android:name=".model.viewDetails.dialog.DialogListActivity" />
         <activity android:name=".model.viewDetails.dialog.DialogFrActivity" />
+        <activity android:name=".model.viewDetails.popwindow.PopWindowListActivity" />
+        <activity android:name=".model.viewDetails.popwindow.BasePopTestActivity" />
+        <activity android:name=".model.viewDetails.viewpager.banpager.BanPagerActivity" />
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
 import com.sz.dzh.dandroidsummary.base.BaseFragment;
 import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.DialogListActivity;
+import com.sz.dzh.dandroidsummary.model.viewDetails.popwindow.PopWindowListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.ViewPagerListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabPagerActivity;
 
@@ -59,7 +60,7 @@ public class ViewDetailsFragment extends BaseFragment {
 
         mList.add(new ClazzBean("ViewPager",ViewPagerListActivity.class));
         mList.add(new ClazzBean("Dialog",DialogListActivity.class));
-
+        mList.add(new ClazzBean("PopWindow", PopWindowListActivity.class));
 
 
         mAdapter = new BaseListAdapter(mList);

@@ -10,22 +10,22 @@ import android.graphics.RectF;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.util.Util;
 
 import java.security.MessageDigest;
 
 /**
  * Glide 圆角转换器
+ * 图形变换，用第三方库好些
+ * https://github.com/wasabeef/glide-transformations
  */
 public class GlideRoundTransform extends BitmapTransformation {
 
+    private final String TAG = getClass().getName();
     private static float radius = 0f;
 
-    public GlideRoundTransform(Context context) {
-        this(context, 4);
-    }
 
-    public GlideRoundTransform(Context context, int dp) {
-        super(context);
+    public GlideRoundTransform(int dp) {
         this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
@@ -51,14 +51,32 @@ public class GlideRoundTransform extends BitmapTransformation {
         return result;
     }
 
-//    @Override
-//    public String getId() {
-//        return getClass().getName() + Math.round(radius);
-//    }
+    /**
+     * 重写epquals和hashcode方法，确保对象唯一性，以和其他的图片变换做区分
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof GlideCircleTransform) {
+            return this == obj;
+        }
+        return false;
+    }
 
     @Override
-    public void updateDiskCacheKey(MessageDigest messageDigest) {
-
+    public int hashCode() {
+        return Util.hashCode(TAG.hashCode());
     }
+
+    /**
+     * 可通过内部算法 重写此方法自定义图片缓存key
+     * @param messageDigest
+     */
+    @Override
+    public void updateDiskCacheKey(MessageDigest messageDigest) {
+        messageDigest.update(TAG.getBytes(CHARSET));
+    }
+
 
 }
