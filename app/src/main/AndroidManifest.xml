@@ -29,6 +29,9 @@
     <uses-feature android:name="android.hardware.Camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <!--targetSdkVersion>=28，前台服务需要此权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
 
     <application
         android:allowBackup="true"
@@ -69,6 +72,38 @@
         <activity android:name=".model.viewDetails.popwindow.PopWindowListActivity" />
         <activity android:name=".model.viewDetails.popwindow.BasePopTestActivity" />
         <activity android:name=".model.viewDetails.viewpager.banpager.BanPagerActivity" />
+        <activity android:name=".model.viewDetails.webview.WebListActivity" />
+        <activity android:name=".model.viewDetails.webview.AgentWebActivity" />
+        <activity android:name=".model.viewDetails.webview.AgentWebJSActivity" />
+        <activity android:name=".model.viewDetails.webview.WebViewActivity" />
+
+
+        <activity android:name=".model.summary.service.ServiceTestActivity" />
+        <activity android:name=".model.summary.service.ServiceListActivity" />
+        <service android:name=".model.summary.service.MyService"/>
+        <service android:name=".model.summary.service.MyIntentService" />
+        <activity android:name=".model.summary.service.keeplive.KeepServiceActivity" />
+        <!--运行在 live进程，与该apk默认进程分离 -->
+        <service android:name=".model.summary.service.keeplive.KeepliveService" android:process=":live"/>
+        <service android:name=".model.summary.service.keeplive.KeepLiveManager$GrayInnerService" android:process=":live"/>
+        <!--1像素界面，也允许在Live进程
+            excludeFromRecents：当该 Activity 是Task 的根 Activity 时，此属性确定任务是否应出现在最近使用的应用列表中。
+                               如果应将任务排除在列表之外，请设置“true”；如果应将其包括在内，则设置“false”。 默认值为“false”。
+                               总的来说，此处是为了不让用户在应用列表找到该界面，这个属性只在Task的根Activity生效
+            exported：是否允许其他应用调用自己。
+            finishOnTaskLaunch：在配置了该属性为true的activity中按home键返回到[home screen]屏幕后,再点击该应用的图标启动程序时,
+                                则系统会调用该activity的[onDestroy]销毁。因为点击应用的图标启动程序时,重新启动了这个任务。
+                                此处设置不重启。
+        -->
+        <activity android:name=".model.summary.service.keeplive.PixelActivity"
+            android:process=":live"
+            android:excludeFromRecents="true"
+            android:theme="@style/LiveActivityStyle"
+            android:exported="false"
+            android:finishOnTaskLaunch="false"
+            android:launchMode="singleInstance"/>
+
+
     </application>
 
 </manifest>

@@ -46,4 +46,11 @@
     </style>
 
 
+    <!--1像素界面样式，windowContentOverlay为空，是去掉了遮盖层-->
+    <style name="LiveActivityStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

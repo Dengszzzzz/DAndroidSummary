@@ -58,7 +58,7 @@ public class BanPagerActivity extends BaseActivity {
     private void initData(){
         list.add("http://pic15.nipic.com/20110628/1369025_192645024000_2.jpg");
         list.add("http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg");
-        list.add("http://pic.58pic.com/58pic/12/01/26/64b58PICxuc.jpg");
+        list.add("http://www.2cto.com/uploadfile/Collfiles/20140615/20140615094106112.jpg");
     }
 
     private void initView(){
