@@ -78,6 +78,9 @@
         <activity android:name=".model.viewDetails.webview.WebViewActivity" />
 
 
+        <service android:name=".model.specialFunc.download.DownloadIntentService" />
+
+        <!--Service部分-->
         <activity android:name=".model.summary.service.ServiceTestActivity" />
         <activity android:name=".model.summary.service.ServiceListActivity" />
         <service android:name=".model.summary.service.MyService"/>
@@ -102,7 +105,8 @@
             android:exported="false"
             android:finishOnTaskLaunch="false"
             android:launchMode="singleInstance"/>
-
+        <activity android:name=".model.specialFunc.download.DownloadListActivity" />
+        <!--Service部分-->
 
     </application>
 
