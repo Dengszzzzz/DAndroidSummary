@@ -16,6 +16,7 @@ import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
 import com.sz.dzh.dandroidsummary.base.BaseFragment;
 import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.specialFunc.download.DownloadListActivity;
+import com.sz.dzh.dandroidsummary.model.specialFunc.fingerprint.FingerPrintActivity;
 import com.sz.dzh.dandroidsummary.model.summary.service.ServiceListActivity;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class SpecialFuncFragment extends BaseFragment {
 
     private void initView(){
         mList.add(new ClazzBean("文件下载",DownloadListActivity.class));
+        mList.add(new ClazzBean("指纹识别",FingerPrintActivity.class));
 
         mAdapter = new BaseListAdapter(mList);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

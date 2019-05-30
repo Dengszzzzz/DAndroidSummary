@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SENSOR_ENABLE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -31,6 +32,10 @@
 
     <!--targetSdkVersion>=28，前台服务需要此权限-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--电源锁权限-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--接收开机广播的权限-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 
     <application
@@ -86,9 +91,37 @@
         <service android:name=".model.summary.service.MyService"/>
         <service android:name=".model.summary.service.MyIntentService" />
         <activity android:name=".model.summary.service.keeplive.KeepServiceActivity" />
-        <!--运行在 live进程，与该apk默认进程分离 -->
-        <service android:name=".model.summary.service.keeplive.KeepliveService" android:process=":live"/>
+
+
+        <!--运行在 live进程，与该apk默认进程分离，这样杀掉apk默认进程，live进程也能存活
+            且优先级设置到最高 1000-->
+        <service android:name=".model.summary.service.keeplive.KeepliveService"
+            android:process=":live"
+            android:priority="1000">
+            <intent-filter>
+                <!-- 系统启动完成后会调用 -->
+                <!--开机广播 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!--系统日期变化广播-->
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <!--插入SD卡并且已正确安装（识别）时发出的广播-->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <!--用户解锁行为的广播-->
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!--当前时间改变，每分钟都发送-->
+                <action android:name="android.intent.action.ACTION_TIME_TICK" />
+                <!--插上外部电源时发出的广播-->
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <!--已断开外部电源连接时发出的广播-->
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </service>
+        <!--用来帮助开启通知栏的Service-->
         <service android:name=".model.summary.service.keeplive.KeepLiveManager$GrayInnerService" android:process=":live"/>
+        <!--守护进程-->
+        <service android:name=".model.summary.service.keeplive.GuardService"
+            android:process=":guard"
+            android:priority="1000"/>
         <!--1像素界面，也允许在Live进程
             excludeFromRecents：当该 Activity 是Task 的根 Activity 时，此属性确定任务是否应出现在最近使用的应用列表中。
                                如果应将任务排除在列表之外，请设置“true”；如果应将其包括在内，则设置“false”。 默认值为“false”。
@@ -106,6 +139,9 @@
             android:finishOnTaskLaunch="false"
             android:launchMode="singleInstance"/>
         <activity android:name=".model.specialFunc.download.DownloadListActivity" />
+        <activity android:name=".model.specialFunc.fingerprint.FingerPrintActivity" />
+        <activity android:name=".model.viewDetails.customview.VerticalStepViewActivity" />
+        <activity android:name=".model.viewDetails.customview.CustomListActivity" />
         <!--Service部分-->
 
     </application>

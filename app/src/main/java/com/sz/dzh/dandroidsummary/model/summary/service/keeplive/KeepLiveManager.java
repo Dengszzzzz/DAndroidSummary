@@ -1,15 +1,20 @@
 package com.sz.dzh.dandroidsummary.model.summary.service.keeplive;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.IBinder;
 
 import com.socks.library.KLog;
+
+import java.util.List;
 
 
 /**
@@ -34,6 +39,7 @@ public class KeepLiveManager{
     private PixelActivity activity;
     //监听锁屏/解锁的广播（必须动态注册）
     private LockReceiver lockReceiver;
+    private Service mService;
 
 
     public static KeepLiveManager getInstance(){
@@ -51,6 +57,7 @@ public class KeepLiveManager{
      * @param service
      */
     public void setServiceForeground(Service service){
+        mService = service;
         //设置service为前台服务，提高优先级
         if (Build.VERSION.SDK_INT < 18) {
             //Android4.3以下 ，此方法能有效隐藏Notification上的图标
@@ -86,7 +93,7 @@ public class KeepLiveManager{
     }
     /*********************************** 设置通知栏，前台服务 *************************************/
 
-    /******************************锁屏/解锁广播**********************************/
+    /******************************锁屏/解锁广播  开启or关闭1像素页面*********************************/
 
     /**
      * 动态 注册锁屏/解锁广播
@@ -120,19 +127,20 @@ public class KeepLiveManager{
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()){
                 case Intent.ACTION_SCREEN_OFF:  //锁屏
-                    KLog.e("锁屏，开启1像素界面");
+                    KLog.e("锁屏");
                     startLiveActivity(context);
                     break;
                 case Intent.ACTION_USER_PRESENT: //解锁
-                    KLog.e("解锁，关闭1像素界面");
+                    KLog.e("解锁");
                     destroyLiveActivity();
+                    if(!isServiceRunning(context,mService.getClass().getName())){
+                        context.startService(new Intent(context,KeepliveService.class));
+                    }
                     break;
             }
         }
     }
-    /******************************锁屏/解锁广播**********************************/
 
-    /******************************开启or关闭1像素页面**********************************/
     private void startLiveActivity(Context context){
         Intent intent = new Intent(context,PixelActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -150,6 +158,26 @@ public class KeepLiveManager{
     }
     /******************************锁屏/解锁广播 开启or关闭1像素页面**********************************/
 
+
+    /**
+     * 用来判断服务是否运行.
+     *
+     * @param className Service 类全名
+     * @return true 在运行 false 不在运行
+     */
+    private boolean isServiceRunning(Context context,String className) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceList = activityManager.getRunningServices(Integer.MAX_VALUE);
+        if (serviceList.size() <= 0) {
+            return false;
+        }
+        for (ActivityManager.RunningServiceInfo info : serviceList) {
+            if (info.service.getClassName().equals(className)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }
