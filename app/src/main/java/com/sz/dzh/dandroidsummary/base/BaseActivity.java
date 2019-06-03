@@ -24,6 +24,8 @@ import java.lang.reflect.ParameterizedType;
  */
 public abstract class BaseActivity<V extends BaseView, P extends BasePresenterImpl<V>> extends RxFragmentActivity implements BaseView {
 
+    protected String TAG = getClass().getSimpleName();
+
     //标题栏
     protected RelativeLayout titleBar;
     protected ImageView ivBack,ivRight;

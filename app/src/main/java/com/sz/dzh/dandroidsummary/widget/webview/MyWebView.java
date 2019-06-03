@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.socks.library.KLog;
+
 /**
  * Created by dengzh on 2018/4/10.
  * 封装WebView
@@ -32,10 +34,17 @@ public class MyWebView extends WebView {
     }
 
     private void init(){
+        //如果遇到webview加载url白屏不显示问题，可设置DomStorage 试试
+        //getSettings().setDomStorageEnabled(true);//设置支持DomStorage
+
         getSettings().setJavaScriptEnabled(true);//支持js
         getSettings().setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
         getSettings().setBuiltInZoomControls(true); //显示放大缩小按钮
         getSettings().setSupportZoom(true);         //允许放大缩小
+
+        //getSettings().setBlockNetworkImage(false);//解决图片不显示
+
+
         setWebViewClient(new MyWebViewClient());   //设置点击网页中的链接不会打开android内置的浏览器，默认打开内置浏览器
     }
 
@@ -62,7 +71,7 @@ public class MyWebView extends WebView {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            view.loadUrl("javascript:(function(){" +
+           /* view.loadUrl("javascript:(function(){" +
                     "var objs = document.getElementsByTagName('img'); " +
                     "for(var i=0;i<objs.length;i++)  " +
                     "{"
@@ -70,6 +79,7 @@ public class MyWebView extends WebView {
                     "    img.style.maxWidth = '100%'; img.style.height = 'auto';  " +
                     "}" +
                     "})()");//重置webview中img标签的图片大小
+*/
         }
 
         /**
@@ -80,6 +90,7 @@ public class MyWebView extends WebView {
          */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            KLog.e(url);
             view.loadUrl(url);
             return true;
         }

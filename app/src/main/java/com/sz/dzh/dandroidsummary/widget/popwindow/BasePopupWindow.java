@@ -18,8 +18,12 @@ import android.widget.TextView;
  * Inflate(resId , null ) 只创建temp ,返回temp
  * Inflate(resId , parent, false )创建temp，然后执行temp.setLayoutParams(params);返回temp
  * Inflate(resId , parent, true ) 创建temp，然后执行root.addView(temp, params);最后返回root
+ * 3、解释
+ * Inflate(resId , null)不能正确处理宽和高是因为：layout_width,layout_height是相对了父级设置的，必须与父级的LayoutParams一致。而此temp的getLayoutParams为null。
+ * Inflate(resId , parent,false) 可以正确处理，因为temp.setLayoutParams(params);这个params正是root.generateLayoutParams(attrs);得到的。
+ * Inflate(resId , parent,true)不仅能够正确的处理，而且已经把resId这个view加入到了parent，并且返回的是parent，和以上两者返回值有绝对的区别。
  * 举个栗子：
- * 1）在listView中调用第三个种，会报错，此时返回的view是listView而不是itemView
+ * 1）在listView中调用第三个种，会报错，此时返回的view是listView而不是itemView。
  * 2）由于BasePopupWindow不打算绑定rootView，所以无法使用第二种方法，width和height要手动设置了
  */
 

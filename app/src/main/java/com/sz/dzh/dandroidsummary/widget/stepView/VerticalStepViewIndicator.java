@@ -25,10 +25,21 @@ import java.util.List;
  * Created by administrator on 2018/8/6.
  * 步骤视图指示器
  * 类似于快递收件流程
+ * 实现需求：
  * 1.状态分为：进行中，已完成，未完成
  * 2.间隔线分为：已完成实线，未完成虚线
  * 3.间隔线高度统一，并不会随内容增多而变化
  * 4.把指示圆的中心点存入列表，TextView的坐标由此决定
+ *
+ * 实现逻辑：
+ * 1.定义各个不同状态下的Paint
+ * 2.onMeasure()，总高度要根据stepNum来决定，这里的每个item的高度都是固定的，不太好。
+ * 3.在改变stepNum后，需调用requestLayout()，发起重新布局请求
+ * 4.onSizeChanged(), 最终测量结果，在控件大小发生改变时调用。
+ * 5.onDraw()，画线分两种状态，画圆分三种状态。
+ *  （注意，在画之前调用mPath.reset()，因为Invalidate()调用onDraw()不清空画布，即上一次的path还保留，所以用Path.reset()重置）
+ * 6.在stepView画出后，得到stepView各个圆心点的位置，依此确定textView的坐标，画出内容。
+ *
  */
 public class VerticalStepViewIndicator extends View {
 
@@ -112,7 +123,6 @@ public class VerticalStepViewIndicator extends View {
         mCirclePaint.setColor(Color.WHITE);
         mCirclePaint.setStyle(Paint.Style.FILL);
         mCirclePaint.setStrokeWidth(2);
-
     }
 
     /**

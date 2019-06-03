@@ -49,7 +49,6 @@ public class VerticalStepViewActivity extends BaseActivity {
         list0.add("配送员【包牙齿】已出发，联系电话【130-0000-0000】，感谢您的耐心等待，参加评价还能赢取好多礼物哦");
         list0.add("感谢你在京东购物，欢迎你下次光临！");
         mVerticalStepView.setStepsViewIndicatorComplectingPosition(list0.size() - 5)//设置完成的步数
-                .reverseDraw(true)
                 .setTextSize(14)
                 .setStepViewTexts(list0)//总步骤
                 .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(this, android.R.color.white))//设置StepsViewIndicator完成线的颜色
@@ -58,8 +57,8 @@ public class VerticalStepViewActivity extends BaseActivity {
                 .setStepViewUnComplectedTextColor(ContextCompat.getColor(this, R.color.uncompleted_text_color))//设置StepsView text未完成线的颜色
                 .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.step_view_complted_icon))//设置StepsViewIndicator CompleteIcon
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.step_view_default_icon))//设置StepsViewIndicator DefaultIcon
-                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.step_view_attention_icon));//设置StepsViewIndicator AttentionIcon
-
+                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.step_view_attention_icon))//设置StepsViewIndicator AttentionIcon
+                .reverseDraw(true);
     }
 
     @OnClick({R.id.positiveBt, R.id.reverseBt})

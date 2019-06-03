@@ -142,6 +142,11 @@
         <activity android:name=".model.specialFunc.fingerprint.FingerPrintActivity" />
         <activity android:name=".model.viewDetails.customview.VerticalStepViewActivity" />
         <activity android:name=".model.viewDetails.customview.CustomListActivity" />
+        <activity android:name=".model.viewDetails.customview.MyViewActivity" />
+        <activity android:name=".model.viewDetails.customview.InflaterActivity" />
+        <activity android:name=".model.viewDetails.anim.FrameAnimActivity" />
+        <activity android:name=".model.viewDetails.anim.TweenAnimActivity" />
+        <activity android:name=".model.viewDetails.anim.AnimListActivity" />
         <!--Service部分-->
 
     </application>

@@ -20,6 +20,8 @@ import java.util.List;
 
 /**
  * Created by administrator on 2018/8/6.
+ * 1.对外暴露方法，方便进行更改
+ * 2.根据已画的指示器View，确定内容文字的位置。
  */
 public class VerticalStepView extends LinearLayout implements VerticalStepViewIndicator.OnDrawIndicatorListener {
 
@@ -28,7 +30,7 @@ public class VerticalStepView extends LinearLayout implements VerticalStepViewIn
     private List<String> mTexts;
     private int mComplectingPosition;
     private int mUnComplectedTextColor = ContextCompat.getColor(getContext(), R.color.uncompleted_text_color);//定义默认未完成文字的颜色;
-    private int mComplectedTextColor = ContextCompat.getColor(getContext(), android.R.color.white);//定义默认完成文字的颜色;
+    private int mComplectedTextColor = ContextCompat.getColor(getContext(), R.color.c_87cfdc);//定义默认完成文字的颜色;
 
     private int mTextSize = 14;//default textSize
     private TextView mTextView;
@@ -47,6 +49,7 @@ public class VerticalStepView extends LinearLayout implements VerticalStepViewIn
     }
 
     private void init() {
+
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.widget_vertical_stepsview, this);
         mStepsViewIndicator = rootView.findViewById(R.id.steps_indicator);
         mTextContainer = rootView.findViewById(R.id.rl_text_container);
@@ -194,8 +197,9 @@ public class VerticalStepView extends LinearLayout implements VerticalStepViewIn
 
 
     /**
-     * 1、得到stepView各个圆心点的位置，依此确定textView的坐标
-     * 2、textView设置数据，并添加入mTextContainer中
+     * 1、清空内容布局  mTextContainer
+     * 2、得到stepView各个圆心点的位置，依此确定textView的坐标
+     * 3、textView设置数据，并添加入mTextContainer中
      */
     @Override
     public void ondrawIndicator() {
@@ -211,12 +215,10 @@ public class VerticalStepView extends LinearLayout implements VerticalStepViewIn
                     mTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     //小于完成中位置的，都是已完成的
-                    if(i <= mComplectingPosition)
-                    {
+                    if(i <= mComplectingPosition) {
                         mTextView.setTypeface(null, Typeface.BOLD);
                         mTextView.setTextColor(mComplectedTextColor);
-                    } else
-                    {
+                    } else {
                         mTextView.setTextColor(mUnComplectedTextColor);
                     }
 

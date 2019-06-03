@@ -16,6 +16,8 @@ public class CustomListActivity extends BaseListShowActivity {
 
     @Override
     protected void initData() {
+        addClazzBean("简单的自定义View总结",MyViewActivity.class);
+        addClazzBean("LayoutInflate理解",InflaterActivity.class);
         addClazzBean("步骤指示器", VerticalStepViewActivity.class);
 
         mAdapter.notifyDataSetChanged();
