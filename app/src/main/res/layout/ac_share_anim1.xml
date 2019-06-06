@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_share_top"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:transitionName="@string/share_iv_top_str"/>
+
+    <TextView
+        android:id="@+id/tv_share_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="名字"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="@dimen/text_size15"
+        android:transitionName="@string/share_tv_name_str"
+        />
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="直接进入"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"/>
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单-共享进入"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"/>
+
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="多-共享进入"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"/>
+
+
+</LinearLayout>

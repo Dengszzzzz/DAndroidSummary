@@ -147,6 +147,9 @@
         <activity android:name=".model.viewDetails.anim.FrameAnimActivity" />
         <activity android:name=".model.viewDetails.anim.TweenAnimActivity" />
         <activity android:name=".model.viewDetails.anim.AnimListActivity" />
+        <activity android:name=".model.viewDetails.anim.ObjectAnimActivity" />
+        <activity android:name=".model.viewDetails.anim.ShareAnimActivity" />
+        <activity android:name=".model.viewDetails.anim.ShareAnimActivityB" />
         <!--Service部分-->
 
     </application>

@@ -5,7 +5,7 @@ import android.view.animation.BaseInterpolator;
 /**
  * Created by administrator on 2018/8/15.
  * 自定义先减速后加速插值器
- * 插值器，直接控制动画的变化速率
+ * 控制动画的变化速率
  */
 public class MyInterpolator extends BaseInterpolator {
 

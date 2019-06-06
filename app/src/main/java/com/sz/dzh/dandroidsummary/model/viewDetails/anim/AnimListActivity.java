@@ -26,6 +26,7 @@ import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
  * 4) Interpolator:插值器，控制动画速率，自定义需要重写getInterpolation(float input)。
  * 5）TypeEvaluator:估值器，自定义需要重写evaluate()方法，计算对象的属性值并将其封装成一个新对象返回。
  * <p>
+ *
  * 4.传统动画和属性动画对比
  * 1）属性动画，真正移动了view的位置。传统动画没有。
  * 2)属性动画，repeatCount设置为无限循环时，记得在onStop()将动画停止，否则内存泄漏
@@ -43,7 +44,8 @@ public class AnimListActivity extends BaseListShowActivity {
     protected void initData() {
         addClazzBean("逐帧动画", FrameAnimActivity.class);
         addClazzBean("补间动画", TweenAnimActivity.class);
-        addClazzBean("属性动画",null);
+        addClazzBean("属性动画", ObjectAnimActivity.class);
+        addClazzBean("共享元素动画", ShareAnimActivity.class);
         mAdapter.notifyDataSetChanged();
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DAndroidSummary</string>
+    <string name="share_iv_top_str">share_iv_top_str</string>
+    <string name="share_tv_name_str">share_tv_name_str</string>
 </resources>
