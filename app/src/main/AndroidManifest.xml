@@ -150,6 +150,8 @@
         <activity android:name=".model.viewDetails.anim.ObjectAnimActivity" />
         <activity android:name=".model.viewDetails.anim.ShareAnimActivity" />
         <activity android:name=".model.viewDetails.anim.ShareAnimActivityB" />
+        <activity android:name=".model.viewDetails.anim.TransitionActivity" />
+        <activity android:name=".model.viewDetails.anim.TransitionActivityB" />
         <!--Service部分-->
 
     </application>

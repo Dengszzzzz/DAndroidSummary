@@ -45,7 +45,8 @@ public class AnimListActivity extends BaseListShowActivity {
         addClazzBean("逐帧动画", FrameAnimActivity.class);
         addClazzBean("补间动画", TweenAnimActivity.class);
         addClazzBean("属性动画", ObjectAnimActivity.class);
-        addClazzBean("共享元素动画", ShareAnimActivity.class);
+        addClazzBean("5.0版本以上的界面动画", TransitionActivity.class);
+        addClazzBean("转场动画-共享元素", ShareAnimActivity.class);
         mAdapter.notifyDataSetChanged();
     }
 }
