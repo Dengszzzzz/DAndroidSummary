@@ -151,7 +151,7 @@
         <activity android:name=".model.viewDetails.anim.ShareAnimActivity" />
         <activity android:name=".model.viewDetails.anim.ShareAnimActivityB" />
         <activity android:name=".model.viewDetails.anim.TransitionActivity" />
-        <activity android:name=".model.viewDetails.anim.TransitionActivityB" />
+        <activity android:name=".model.viewDetails.anim.TransitionActivityB" android:theme="@style/AppTheme.Trans"/>
         <!--Service部分-->
 
     </application>
