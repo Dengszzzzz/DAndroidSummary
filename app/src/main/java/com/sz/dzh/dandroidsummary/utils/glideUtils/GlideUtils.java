@@ -24,7 +24,7 @@ import com.sz.dzh.dandroidsummary.R;
 public class GlideUtils {
 
     //测试用图
-    public static String url = "http://www.2cto.com/uploadfile/Collfiles/20140615/20140615094106112.jpg";
+    public static String url = "http://hbimg.b0.upaiyun.com/c1eb009f8bce5955766a87a8890fe6e9e730abf7b1c70-f1Aw6M_fw658";
 
     public static int ROUND_IMAGE = 10000;
     public static int CIRCLE_IMAGE = 10001;

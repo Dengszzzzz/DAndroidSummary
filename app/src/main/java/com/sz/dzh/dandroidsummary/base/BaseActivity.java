@@ -141,7 +141,14 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenterIm
     public void startActivity(Class<? extends Activity> tarActivity) {
         Intent intent = new Intent(this, tarActivity);
         startActivity(intent);
+       // overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
+
+    /*@Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }*/
 
 
     /**
