@@ -138,6 +138,8 @@
             android:exported="false"
             android:finishOnTaskLaunch="false"
             android:launchMode="singleInstance"/>
+        <!--Service部分-->
+
         <activity android:name=".model.specialFunc.download.DownloadListActivity" />
         <activity android:name=".model.specialFunc.fingerprint.FingerPrintActivity" />
         <activity android:name=".model.viewDetails.customview.VerticalStepViewActivity" />
@@ -152,7 +154,11 @@
         <activity android:name=".model.viewDetails.anim.ShareAnimActivityB" />
         <activity android:name=".model.viewDetails.anim.TransitionActivity" />
         <activity android:name=".model.viewDetails.anim.TransitionActivityB" android:theme="@style/AppTheme.Trans"/>
-        <!--Service部分-->
+        <activity android:name=".model.summary.activity.OrientationActivity" />
+        <activity android:name=".model.summary.activity.AcListActivity" />
+        <activity android:name=".model.summary.activity.ConfigChangeActivity"
+            android:configChanges="orientation|screenSize"/>
+
 
     </application>
 
