@@ -16,12 +16,8 @@ import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
 import com.sz.dzh.dandroidsummary.base.BaseFragment;
 import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.summary.activity.AcListActivity;
-import com.sz.dzh.dandroidsummary.model.summary.activity.OrientationActivity;
 import com.sz.dzh.dandroidsummary.model.summary.service.ServiceListActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.DialogListActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.popwindow.PopWindowListActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.ViewPagerListActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.webview.WebListActivity;
+import com.sz.dzh.dandroidsummary.model.summary.storageSummary.StorageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +57,7 @@ public class SummaryFragment extends BaseFragment{
     private void initView(){
         mList.add(new ClazzBean("Service",ServiceListActivity.class));
         mList.add(new ClazzBean("Activity",AcListActivity.class));
+        mList.add(new ClazzBean("数据存储知识",StorageActivity.class));
 
 
 
