@@ -68,8 +68,20 @@
         <activity android:name=".model.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- url 跳转app   <a href="[scheme]://[host]/[path]?[query]">启动应用程序</a> -->
+            <intent-filter>
+                <!-- 必须加否否无法响应点击链接的 Intent -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="dzh"
+                    android:host="summary"
+                    android:pathPrefix="/open"
+                    />
             </intent-filter>
         </activity>
         <activity android:name=".model.viewDetails.viewpager.ViewPagerListActivity" />
@@ -163,6 +175,10 @@
         <activity android:name=".model.summary.activity.ConfigChangeActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".model.summary.storageSummary.StorageActivity" />
+        <activity android:name=".model.summary.netSummary.NetActivity" />
+        <activity android:name=".model.summary.netSummary.NetListActivity" />
+        <activity android:name=".model.summary.netSummary.retrofit.RetrofitActivity" />
+        <activity android:name=".model.summary.netSummary.okhttp.OkHttpActivity" />
 
 
     </application>

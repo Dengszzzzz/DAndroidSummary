@@ -16,6 +16,8 @@ import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
 import com.sz.dzh.dandroidsummary.base.BaseFragment;
 import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.summary.activity.AcListActivity;
+import com.sz.dzh.dandroidsummary.model.summary.netSummary.NetActivity;
+import com.sz.dzh.dandroidsummary.model.summary.netSummary.NetListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.service.ServiceListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.storageSummary.StorageActivity;
 
@@ -58,6 +60,7 @@ public class SummaryFragment extends BaseFragment{
         mList.add(new ClazzBean("Service",ServiceListActivity.class));
         mList.add(new ClazzBean("Activity",AcListActivity.class));
         mList.add(new ClazzBean("数据存储知识",StorageActivity.class));
+        mList.add(new ClazzBean("网络知识",NetListActivity.class));
 
 
 
