@@ -1,6 +1,7 @@
 package com.sz.dzh.dandroidsummary.model.summary.premission;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -39,7 +40,7 @@ public class PermissionsUtils {
      * @param permissions  权限数组
      * @param listener     回调结果
      */
-    public void checkPermissions(Activity context,String[] permissions,@NonNull IPermissionsResult listener){
+    public void checkPermissions(Activity context, String[] permissions, @NonNull IPermissionsResult listener){
         mListener = listener;
         if(Build.VERSION.SDK_INT < 23){  //6.0才申请权限
             mListener.accept();
@@ -50,21 +51,14 @@ public class PermissionsUtils {
         List<String> mNoList = new ArrayList<>();
         for (int i = 0; i < permissions.length; i++) {
             if(ContextCompat.checkSelfPermission(context,permissions[i]) != PackageManager.PERMISSION_GRANTED){
-                //判断用户是否勾选过不再询问
-                if(ActivityCompat.shouldShowRequestPermissionRationale(context,permissions[i])){
-                    //用户拒绝过这个权限了，应该提示用户，为什么需要这个权限。
-                    
-                }else{
-                    mNoList.add(permissions[i]);
-                }
+                mNoList.add(permissions[i]);
             }
         }
 
         //申请权限
-        if(mNoList.size()>0){ //有权限未通过
+        if(mNoList.size()>0){
             ActivityCompat.requestPermissions(context,permissions,mRequestCode);
         }else{
-            //权限已通过
             mListener.accept();
         }
     }
@@ -77,16 +71,16 @@ public class PermissionsUtils {
      *                     PackageManager.PERMISSION_GRANTED：被授权。
      */
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        boolean hasPermissionDismiss = false;//是否有权限未通过
         if(mRequestCode == requestCode){
+            //用来记录被拒绝的权限
+            ArrayList<String> mDisList = new ArrayList<>();
             for (int i = 0; i < grantResults.length; i++) {
                 if(grantResults[i] == PackageManager.PERMISSION_DENIED){
-                    hasPermissionDismiss = true;
+                    mDisList.add(permissions[i]);
                 }
             }
-            //如果有权限没有被允许
-            if(hasPermissionDismiss){
-                mListener.forbit();
+            if(mDisList.size()>0){
+                mListener.forbit(mDisList);
             }else{
                 mListener.accept();
             }
@@ -96,6 +90,6 @@ public class PermissionsUtils {
 
     public interface IPermissionsResult {
         void accept();  //允许权限
-        void forbit();  //拒绝权限
+        void forbit(ArrayList<String> disList);  //拒绝权限
     }
 }
