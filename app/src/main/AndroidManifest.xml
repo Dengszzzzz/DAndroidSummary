@@ -180,6 +180,7 @@
         <activity android:name=".model.summary.netSummary.retrofit.RetrofitActivity" />
         <activity android:name=".model.summary.netSummary.okhttp.OkHttpActivity" />
         <activity android:name=".model.specialFunc.emoji_encoder.EmojiEncoderActivity" />
+        <activity android:name=".model.summary.premission.PermissionActivity" />
 
 
     </application>

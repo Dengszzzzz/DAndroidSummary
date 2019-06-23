@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 
+import com.socks.library.KLog;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.utils.ToastUtils;
@@ -57,6 +58,8 @@ public class PermissionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_permission);
         ButterKnife.bind(this);
+        initTitle();
+        tvTitle.setText("权限管理");
     }
 
     @OnClick(R.id.clickBt)
@@ -72,21 +75,27 @@ public class PermissionActivity extends BaseActivity {
         PermissionsUtils.getInstance().checkPermissions(this, permissions, new PermissionsUtils.IPermissionsResult() {
             @Override
             public void accept() {
+                //点了允许，这个是false
+                KLog.e("Permission","允许权限--shouldShowRequestPermissionRationale--" + ActivityCompat.shouldShowRequestPermissionRationale(PermissionActivity.this, Manifest.permission.CAMERA));
                 ToastUtils.showToast("您已允许权限");
             }
 
             @Override
             public void forbit(ArrayList<String> disList) {
                 for (String permission : disList) {
-                    //被拒绝，判断是否点了不再询问,是则返回false
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(PermissionActivity.this, permission)) {
+                    KLog.e("Permission","拒绝权限--shouldShowRequestPermissionRationale--" + ActivityCompat.shouldShowRequestPermissionRationale(PermissionActivity.this, permission));
+                    //直接被拒绝，则返回true，如果点了不再询问拒绝,则返回false
+                    //这个方法的理解是，是否需要告诉用户请求权限的原因，那么当用户拒绝的时候，最好给用户一个提示。
+                    //而不再询问拒绝or允许权限，则没必要给用户提示了。
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(PermissionActivity.this, permission)) {
+                        ToastUtils.showToast("您已拒绝储存 or 相机权限，为了该功能正常使用，请允许");
+                    }else{
                         new AlertDialog.Builder(PermissionActivity.this)
-                                .setMessage("请去系统设置")
+                                .setMessage("如果要开启该功能，请您去系统设置打开该权限")
                                 .show();
                         break;
                     }
                 }
-                ToastUtils.showToast("您已拒绝储存 or 相机权限");
             }
         });
     }
