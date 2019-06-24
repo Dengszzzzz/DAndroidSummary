@@ -1,11 +1,15 @@
 package com.sz.dzh.dandroidsummary.model.specialFunc.download;
 
+import android.app.Activity;
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.widget.RemoteViews;
@@ -13,6 +17,10 @@ import android.widget.RemoteViews;
 import com.socks.library.KLog;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.base.App;
+import com.sz.dzh.dandroidsummary.bean.EventBean;
+import com.sz.dzh.dandroidsummary.utils.Constant;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -22,12 +30,22 @@ import java.io.File;
  * 1.判断文件下载程度，是否已完成下载，下载完成直接安装apk
  * 2.开启通知栏
  * 3.下载apk，通知栏显示下载进度
+ *
+ * 当把targetSdk设为26，也就是Android 8.0后，记得填坑
+ * 比如通知栏没显示问题，吊不起安装页面问题等
  */
 public class DownloadIntentService extends IntentService {
 
     private static final String TAG = "DownloadIntentService";
-    private NotificationManager mNotifyManager;
+    public static String downLoadPath;
+
+    //通知的一个 CHANNEL,这个是 8.0 之后才引入的,取值 App 包名即可。
+    private  final String NOTIFICATION_CHANNEL = "com.sz.dzh.dandroidsummary";
+    //自定义，只要保证唯一即可。
+    private  final String NOTIFICATION_CHANNEL_NAME = "apk_download_channel";
+    private NotificationManager mNotifyManager;  //通知管理类
     private Notification mNotification;
+
     private int downloadId = 101;
     private String mDownloadFileName;
 
@@ -46,10 +64,10 @@ public class DownloadIntentService extends IntentService {
         mDownloadFileName = intent.getExtras().getString("download_file");
         KLog.d(TAG, "下载地址：" + downloadUrl);
         KLog.d(TAG, "文件名" + mDownloadFileName);
-        downloadUrl = "http://admin123.pplussport.com/android/PPlus_V1.0.0.apk";
+        downLoadPath = DOWNLOAD_DIR + mDownloadFileName;
 
         //1.判断文件是否存在，具提的下载进度，如果已下载完成，则执行安装
-        final File file = new File(DownloadIntentService.DOWNLOAD_DIR + mDownloadFileName);
+        final File file = new File(downLoadPath);
         long range = 0;
         int progress = 0;
         if (file.exists()) {
@@ -59,7 +77,8 @@ public class DownloadIntentService extends IntentService {
             progress = (int) (range * 100 / file.length());
             //判断是否已下载完整
             if (range == file.length()) {
-                installApp(file);
+                EventBus.getDefault().post(new EventBean(Constant.EventCode.DOWNLOAD_APK_SUCCESS,null));
+                //installApp(file);
                 return;
             }
         }
@@ -69,15 +88,7 @@ public class DownloadIntentService extends IntentService {
         final RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notify_download);
         remoteViews.setProgressBar(R.id.pb_progress, 100, progress, false);
         remoteViews.setTextViewText(R.id.tv_progress, "已下载" + progress + "%");
-        //新建Builder对象
-        Notification.Builder builder = new Notification.Builder(this)
-                .setContent(remoteViews)
-                .setTicker("正在下载")
-                .setSmallIcon(R.mipmap.ic_launcher);
-        //将Builder对象转变成普通的notification
-        mNotification = builder.build();
-        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyManager.notify(downloadId, mNotification);
+        createNotification(remoteViews);
 
         //3.下载apk
         DownloadRetrofitUtils.getInstance().downloadFile(range, downloadUrl, mDownloadFileName, new DownloadCallBack() {
@@ -93,7 +104,8 @@ public class DownloadIntentService extends IntentService {
             public void onCompleted() {
                 KLog.d(TAG, "下载完成");
                 mNotifyManager.cancel(downloadId);
-                installApp(file);
+                EventBus.getDefault().post(new EventBean(Constant.EventCode.DOWNLOAD_APK_SUCCESS,null));
+                //installApp(file);
             }
 
             @Override
@@ -104,6 +116,34 @@ public class DownloadIntentService extends IntentService {
         });
     }
 
+    /**
+     * 创建通知栏
+     * @param remoteViews
+     */
+    private void createNotification(RemoteViews remoteViews){
+        //新建Builder对象
+        Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder =  new Notification.Builder(this, NOTIFICATION_CHANNEL);
+        } else {
+            builder =  new Notification.Builder(this);
+        }
+        builder.setContent(remoteViews)
+                .setTicker("正在下载")
+                .setSmallIcon(R.mipmap.ic_launcher);
+        //将Builder对象转变成普通的notification
+        mNotification = builder.build();
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notifyChannel = new NotificationChannel(NOTIFICATION_CHANNEL,
+                    NOTIFICATION_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notifyChannel.setLightColor(Color.GREEN);
+            notifyChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            mNotifyManager.createNotificationChannel(notifyChannel);
+        }
+        mNotifyManager.notify(downloadId, mNotification);
+    }
 
     /**
      * 安装apk
