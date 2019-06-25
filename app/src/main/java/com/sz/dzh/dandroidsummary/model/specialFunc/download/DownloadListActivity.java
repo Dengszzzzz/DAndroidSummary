@@ -119,7 +119,7 @@ public class DownloadListActivity extends BaseListShowActivity {
     }
 
     /**
-     * 判读版本是否在7.0以上，7.0以上要用FileProvider
+     * 判断是否在7.0以上，7.0以上要用FileProvider
      */
     private void installApp() {
         File file = new File(DownloadIntentService.downLoadPath);
@@ -129,7 +129,7 @@ public class DownloadListActivity extends BaseListShowActivity {
             //参数2就是AndroidManifest.xml中provider的authorities
             apkUri = FileProvider.getUriForFile(this, getPackageName() + ".fileProvider", file);
             //Granting Temporary Permissions to a URI
-            //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }else{
             apkUri = Uri.fromFile(file);
         }
