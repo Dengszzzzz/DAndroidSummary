@@ -124,18 +124,17 @@ public class DownloadListActivity extends BaseListShowActivity {
     private void installApp() {
         File file = new File(DownloadIntentService.downLoadPath);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-
+        Uri apkUri;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            //provider authorities
-            Uri apkUri = FileProvider.getUriForFile(this, "com.sz.dzh.dandroidsummary.fileProvider", file);
+            //参数2就是AndroidManifest.xml中provider的authorities
+            apkUri = FileProvider.getUriForFile(this, getPackageName() + ".fileProvider", file);
             //Granting Temporary Permissions to a URI
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }else{
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            apkUri = Uri.fromFile(file);
         }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         startActivity(intent);
     }
 }

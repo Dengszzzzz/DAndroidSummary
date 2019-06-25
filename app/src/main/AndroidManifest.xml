@@ -64,15 +64,20 @@
             android:value="2.1" />
         <!-- 屏幕适配 -->
 
-        <!--数据共享 7.0以上需要-->
+        <!--
+          解释：
+          android:authorities="${applicationId}.fileProvider" 就是 app的包名.fileProvider
+          android:exported="false"   为false，不允许被另一个Application的组件启动
+          android:grantUriPermissions="true"  为true，才能获取临时共享权限。
+        -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.sz.dzh.dandroidsummary.fileProvider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path" />
+                android:resource="@xml/provider_paths" />
         </provider>
 
 

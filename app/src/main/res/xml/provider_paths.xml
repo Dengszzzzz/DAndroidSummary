@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-<files-path/>代表的根目录： Context.getFilesDir()
 <external-path/>代表的根目录: Environment.getExternalStorageDirectory()
+<files-path/>代表的根目录： Context.getFilesDir()
 <cache-path/>代表的根目录: getCacheDir()
 path="xxx"表示你要共享的文件夹
 -->
