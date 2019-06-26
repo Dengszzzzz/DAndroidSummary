@@ -39,9 +39,7 @@ public class DownloadIntentService extends IntentService {
     private static final String TAG = "DownloadIntentService";
     public static String downLoadPath;
 
-    //通知的一个 CHANNEL,这个是 8.0 之后才引入的,取值 App 包名即可。
-    private  final String NOTIFICATION_CHANNEL = "com.sz.dzh.dandroidsummary";
-    //自定义，只要保证唯一即可。
+    private  final String NOTIFICATION_CHANNEL_ID = "com.sz.dzh.dandroidsummary";
     private  final String NOTIFICATION_CHANNEL_NAME = "apk_download_channel";
     private NotificationManager mNotifyManager;  //通知管理类
     private Notification mNotification;
@@ -118,38 +116,40 @@ public class DownloadIntentService extends IntentService {
 
     /**
      * 创建通知栏
+     * targetSdk >= 26 时，系统不会默认添加Channel，反之低版本则会默认添加；
      * @param remoteViews
      */
     private void createNotification(RemoteViews remoteViews){
-        //新建Builder对象
+        //1.创建通知通道
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //参数：通道id、名字、优先级。
+            NotificationChannel notifyChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                    NOTIFICATION_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notifyChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            mNotifyManager.createNotificationChannel(notifyChannel);
+        }
+        //2.创建Builder对象
         Notification.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder =  new Notification.Builder(this, NOTIFICATION_CHANNEL);
+            builder =  new Notification.Builder(this, NOTIFICATION_CHANNEL_ID);
         } else {
             builder =  new Notification.Builder(this);
         }
         builder.setContent(remoteViews)
                 .setTicker("正在下载")
                 .setSmallIcon(R.mipmap.ic_launcher);
-        //将Builder对象转变成普通的notification
+        //3.将Builder对象转变成普通的notification
         mNotification = builder.build();
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notifyChannel = new NotificationChannel(NOTIFICATION_CHANNEL,
-                    NOTIFICATION_CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notifyChannel.setLightColor(Color.GREEN);
-            notifyChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            mNotifyManager.createNotificationChannel(notifyChannel);
-        }
         mNotifyManager.notify(downloadId, mNotification);
     }
 
     /**
      * 安装apk
-     * @param file
      */
-    private void installApp(File file) {
+    private void installApp() {
+        File file = new File(DownloadIntentService.downLoadPath);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");

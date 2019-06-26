@@ -128,7 +128,7 @@ public class DownloadListActivity extends BaseListShowActivity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             //参数2就是AndroidManifest.xml中provider的authorities
             apkUri = FileProvider.getUriForFile(this, getPackageName() + ".fileProvider", file);
-            //Granting Temporary Permissions to a URI
+            //临时授权读该Uri代表的文件的权限，不然安装的时候会出现“解析软件包出现问题”。
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }else{
             apkUri = Uri.fromFile(file);
