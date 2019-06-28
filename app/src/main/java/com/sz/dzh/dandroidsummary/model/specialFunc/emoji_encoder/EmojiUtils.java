@@ -4,10 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
- * 如果后台数据库是utf-8，那么emoji表情无法直接插入数据库，是因为utf-8是支持3字节的，而emoji表情是4字节，此外还有某些特殊字符也是4个字节的。
- * 可以交给后台处理，如果后台不处理，则ios和Andriod要统一对emoji表情编码。下面举例UTF-8编码。
+ *  UTF-8编码有可能是两个、三个、四个字节。Emoji表情或者某些特殊字符是4个字节，而Mysql的utf8编码最多3个字节，
+ *  所以数据插不进去。遇到这种问题可以交给后台处理，如果后台不处理，则ios和Andriod要统一对emoji表情编码。
+ *  在解决这个问题之前，需要了解以下知识
+ *  1.位、字节、字符的概念和区别。
+ *  2.UTF-8编码，字节和字符的对应关系。
  *
- */
+ *  */
 public class EmojiUtils {
 
     /**
@@ -18,6 +21,7 @@ public class EmojiUtils {
     public static String escape(String src) {
 
         //codePointCount()方法返回的是代码点个数，是实际上的字符个数。
+        //举例：输入一个emoji表情，此时codePointCount=1，length=2。但是对我们来说，字符就是1个。
         int cpCount = src.codePointCount(0, src.length());
         int firCodeIndex = src.offsetByCodePoints(0, 0);
         int lstCodeIndex = src.offsetByCodePoints(0, cpCount - 1);
@@ -27,7 +31,6 @@ public class EmojiUtils {
             //遍历每个codePoint
             int codepoint = src.codePointAt(index);
             if (!isEmojiCharacter(codepoint)) {
-                System.err.println("codepoint:" + Integer.toHexString(codepoint));
                 sb.append((char) codepoint);
             }else{
                 int length = (Character.isSupplementaryCodePoint(codepoint)) ? 2 : 1;
