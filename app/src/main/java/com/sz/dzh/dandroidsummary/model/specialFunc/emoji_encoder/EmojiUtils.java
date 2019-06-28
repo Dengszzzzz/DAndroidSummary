@@ -13,12 +13,38 @@ import java.net.URLEncoder;
  *  */
 public class EmojiUtils {
 
+    public static String escape(String src){
+        //1.得到代码点数量，也即是实际字符数，注意和length()的区别
+        //比如一个emoji表情是一个字符，codePointCount()是1，length()是2
+        int cpCount = src.codePointCount(0, src.length());
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<cpCount;){
+            //2.获得代码点，判断是否是emoji表情
+            int codepoint = src.codePointAt(i);
+            if (!isEmojiCharacter(codepoint)) {
+                sb.append((char) codepoint);
+            }else{
+                try {
+                    //3.对emoji表情UTF-8编码，+2是因为emoji是增补字符，length是2
+                    String encoderStr = URLEncoder.encode(src.substring(i,i + 2), "UTF-8");
+                    sb.append(encoderStr);
+                } catch (UnsupportedEncodingException e) {
+
+                }
+            }
+            //4.确定指定字符（Unicode代码点）是否在增补字符范围内。
+            //因为除了表情，还有些特殊字符也是在增补字符方位内的。
+            i += Character.isSupplementaryCodePoint(codepoint)? 2 : 1;
+        }
+        return sb.toString();
+    }
+
     /**
      * 对emoji表情单独编码
      * @param src
      * @return
      */
-    public static String escape(String src) {
+    public static String escape2(String src) {
 
         //codePointCount()方法返回的是代码点个数，是实际上的字符个数。
         //举例：输入一个emoji表情，此时codePointCount=1，length=2。但是对我们来说，字符就是1个。
