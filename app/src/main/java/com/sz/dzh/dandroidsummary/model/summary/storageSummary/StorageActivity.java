@@ -1,5 +1,6 @@
 package com.sz.dzh.dandroidsummary.model.summary.storageSummary;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.socks.library.KLog;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.base.BaseActivity;
+import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +44,15 @@ public class StorageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_storage);
         ButterKnife.bind(this);
-        getLinkMan();
+
+        new RxPermissions(this).request(Manifest.permission.READ_CONTACTS)
+                .subscribe(granted -> {
+                    if (granted) {
+                        getLinkMan();
+                    } else {
+                        ToastUtils.showToast("读取联系人需要开启权限");
+                    }
+                });
     }
 
     /**
