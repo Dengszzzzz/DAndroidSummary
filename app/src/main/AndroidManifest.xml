@@ -242,7 +242,8 @@
         <activity android:name=".model.summary.activity.OrientationActivity" />
         <activity android:name=".model.summary.activity.AcListActivity" />
         <activity android:name=".model.summary.activity.ConfigChangeActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"/>
         <activity android:name=".model.summary.storageSummary.StorageActivity" />
         <activity android:name=".model.summary.netSummary.NetActivity" />
         <activity android:name=".model.summary.netSummary.NetListActivity" />
