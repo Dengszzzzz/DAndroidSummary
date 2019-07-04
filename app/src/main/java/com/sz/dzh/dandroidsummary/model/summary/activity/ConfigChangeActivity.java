@@ -29,8 +29,6 @@ public class ConfigChangeActivity extends AppCompatActivity {
 
     @BindView(R.id.descTv)
     TextView mDescTv;
-    @BindView(R.id.tvTitle)
-    TextView mTvTitle;
     @BindView(R.id.bgIv)
     ImageView mBgIv;
 
