@@ -65,30 +65,14 @@ public class EtAndSeekBarActivity extends BaseActivity {
     private boolean AFocusChangeFlag;  //valueA焦点状态
     private boolean BFocusChangeFlag;  //valueB焦点状态
     private void initEtAndEt(){
-
-        mEtValueA.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                AFocusChangeFlag = b;
-            }
-        });
-        mEtValueB.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                BFocusChangeFlag = b;
-            }
-        });
-
+        mEtValueA.setOnFocusChangeListener((view, b) -> AFocusChangeFlag = b);
+        mEtValueB.setOnFocusChangeListener((view, b) -> BFocusChangeFlag = b);
         mEtValueA.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -105,14 +89,10 @@ public class EtAndSeekBarActivity extends BaseActivity {
         });
         mEtValueB.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -309,6 +289,14 @@ public class EtAndSeekBarActivity extends BaseActivity {
             public void afterTextChanged(Editable editable) {
                 KLog.e(TAG,"afterTextChanged()-------------");
                 KLog.e(TAG,"输入框显示的信息:" + editable.toString());
+            }
+        });
+
+
+        mEtValueA.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                focusChangeFlag = b;
             }
         });
     }
