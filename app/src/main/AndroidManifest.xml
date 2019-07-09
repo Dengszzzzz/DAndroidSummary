@@ -252,6 +252,8 @@
         <activity android:name=".model.specialFunc.emoji_encoder.EmojiEncoderActivity" />
         <activity android:name=".model.summary.premission.PermissionActivity" />
         <activity android:name=".model.problems.EtAndSeekBarActivity" />
+        <activity android:name=".model.summary.imageSummary.ImageListActivity" />
+        <activity android:name=".model.summary.imageSummary.ImageLoadActivity" />
 
 
     </application>
