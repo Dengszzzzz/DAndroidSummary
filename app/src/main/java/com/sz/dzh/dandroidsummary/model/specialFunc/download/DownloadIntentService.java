@@ -43,10 +43,9 @@ public class DownloadIntentService extends IntentService {
     private  final String NOTIFICATION_CHANNEL_NAME = "apk_download_channel";
     private NotificationManager mNotifyManager;  //通知管理类
     private Notification mNotification;
-
     private int downloadId = 101;
-    private String mDownloadFileName;
 
+    private String mDownloadFileName;
     public static String DOWNLOAD_DIR;  //下载目录
 
     public DownloadIntentService() {

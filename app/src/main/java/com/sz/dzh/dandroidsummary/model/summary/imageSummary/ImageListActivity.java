@@ -14,10 +14,9 @@ import com.sz.dzh.dandroidsummary.model.summary.service.keeplive.KeepServiceActi
  * 5.圆形图片、圆角图片等如何实现。
  *
  *
- * 项目中：
- * 图片加载，网络加载要做三级缓存。
- * 选择相册和拍照后，对图片做压缩，再上传给后台。长按保存图片，通知图库更新。
- * 圆形头像，圆角背景等。
+ * 参考：
+ * 1.Android性能优化：Bitmap详解&你的Bitmap占多大内存？
+ * https://www.jianshu.com/p/4ba3e63c8cdc
  */
 
 public class ImageListActivity extends BaseListShowActivity {
@@ -29,7 +28,7 @@ public class ImageListActivity extends BaseListShowActivity {
     @Override
     protected void initData() {
         addClazzBean("图片加载及三级缓存", ImageLoadActivity.class);
-        addClazzBean("相册拍照、图片压缩保存",KeepServiceActivity.class);
+        addClazzBean("相册拍照、图片压缩保存",BitmapOperaActivity.class);
         mAdapter.notifyDataSetChanged();
     }
 }

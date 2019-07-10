@@ -133,7 +133,7 @@ public class DownloadListActivity extends BaseListShowActivity {
         }else{
             apkUri = Uri.fromFile(file);
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //注意别设置成setFlags(...)了,不然前面的addFlags就清掉了。
         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         startActivity(intent);
     }
