@@ -107,9 +107,14 @@ public class MyImageLoad {
     }
 
     /**
-     * 找缓存目录
+     * FilesDir一般放一些长时间保存的数据，CacheDir放临时缓存数据，有External的是指外部SD卡。
+     * 这4个路径下的数据都会随着app被用户卸载而删除，
+     * FilesDir 和 CacheDir 分别对应的是 设置->应用->应用详情里面的“清除数据”和”清除缓存“选项。
+     *
+     * getExternalFilesDir()：  SDCard/Android/data/<application package>/files/目录
+     * getFilesDir()：               data/data/<application package>/files/目录
      * getExternalCacheDir()： SDCard/Android/data/<application package>/cache/目录
-     * getCacheDir():          /data/data/<application package>/cache目录
+     * getCacheDir()：            data/data/<application package>/cache/目录
      * @return
      */
     private static File getCacheDir(){

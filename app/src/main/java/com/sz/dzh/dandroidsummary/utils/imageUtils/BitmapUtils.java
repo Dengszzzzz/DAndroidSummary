@@ -1,12 +1,20 @@
 package com.sz.dzh.dandroidsummary.utils.imageUtils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
 
 import com.socks.library.KLog;
+import com.sz.dzh.dandroidsummary.base.App;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Dengzh
@@ -62,13 +70,15 @@ public class BitmapUtils {
      *
      * */
 
+    /*********************************    图片压缩    *********************************************/
 
     /**
      * 压缩图片
-     * 压缩要求，宽480，高640，文件大小不超过1M。
+     * 压缩要求，宽1080，高1920，文件大小不超过1M。
+     * @param path  图片路径
      * */
     public static Bitmap getCompressBitmap(String path){
-        Bitmap bitmap = getResizeBitmap(path,480,640) ;
+        Bitmap bitmap = getResizeBitmap(path,1080,1920) ;
         return getQualityBitmap(bitmap,1024);
     }
 
@@ -85,14 +95,12 @@ public class BitmapUtils {
         if (f.exists() && f.length() > 0) {
             try {
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                //RGB_565压缩
-                options.inPreferredConfig = Bitmap.Config.RGB_565;
                 //只取宽高
                 options.inJustDecodeBounds = true;
                 BitmapFactory.decodeFile(filePath, options);
                 int picWidth = options.outWidth;
                 int picHeight = options.outHeight;
-                KLog.e(TAG, "宽高压缩前图片宽度-"+ picWidth + "，高度-" + picHeight);
+                KLog.e(TAG, "宽高压缩前图片宽度="+ picWidth + "，高度=" + picHeight);
                 //图片宽高大于所需宽高才压缩
                 if(picWidth > width || picHeight > height){
                     options.inSampleSize = Math.max(options.outWidth / width, options.outHeight / height);
@@ -101,8 +109,8 @@ public class BitmapUtils {
                 }
                 options.inJustDecodeBounds = false;
                 bitmap = BitmapFactory.decodeFile(filePath, options);
-                KLog.e(TAG, "宽高压缩后图片宽度-"+ bitmap.getWidth() + "，高度-" + bitmap.getHeight()
-                        + ",所占内存大小-" + bitmap.getByteCount());
+                KLog.e(TAG, "宽高压缩后图片宽度="+ bitmap.getWidth() + "，高度=" + bitmap.getHeight()
+                        + ",所占内存大小=" + bitmap.getByteCount()/ 1024 +"KB");
             } catch (OutOfMemoryError e) {
                 e.printStackTrace();
             }
@@ -125,12 +133,12 @@ public class BitmapUtils {
         int quality = 100;
         bitmap.compress(Bitmap.CompressFormat.JPEG,quality,baos);
         int baosLength = baos.toByteArray().length;
-        KLog.e(TAG, "质量压缩前图片的质量  " + (bitmap.getByteCount() / 1024 +"KB")
-                + "bytes.length=" + (baosLength/ 1024) + "KB"
-                + "  quality=" + quality);
+        KLog.e(TAG, "质量压缩前所占内存大小=" + (bitmap.getByteCount() / 1024 +"KB")
+                + "，文件大小（bytes.length）=" + (baosLength/ 1024) + "KB"
+                + "，quality=" + quality);
         while (baosLength/1024 > maxFileSize){
-            //循环判断如果压缩后图片是否大于maxMemmorrySize,大于继续压缩
-            baos.reset(); //清空baos
+            //清空baos
+            baos.reset();
             quality = quality <= 10 ? quality - 1 : quality - 10;
             if (quality == 0) {
                 break;
@@ -139,11 +147,107 @@ public class BitmapUtils {
             //将压缩后的图片保存到baos中
             baosLength = baos.toByteArray().length;
         }
-        KLog.e(TAG, "质量压缩后图片的质量 " + (bitmap.getByteCount() / 1024 +"KB")
-                + "bytes.length=" + (baosLength/ 1024) + "KB"
-                + "  quality=" + quality);
+        KLog.e(TAG, "质量压缩后所占内存大小=" + (bitmap.getByteCount() / 1024 +"KB")
+                + "，文件大小（bytes.length）=" + (baosLength/ 1024) + "KB"
+                + "，quality=" + quality);
         bitmap.recycle();
         bitmap = null;
-        return BitmapFactory.decodeByteArray(baos.toByteArray(),0,baosLength);
+
+        //最终目标Bitmap是经过压缩后，再decodeByteArray出来的，而decodeByteArray默认的是ARGB_8888，为了减少内存占用，
+        //要用RGB_565编码解析。
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        Bitmap targetBitmap = BitmapFactory.decodeByteArray(baos.toByteArray(),0,baosLength,options);
+        KLog.e("BitmapUtils", "最终解析后所占内存大小" + (targetBitmap.getByteCount() / 1024 + "KB"));
+        return targetBitmap;
     }
+
+
+
+
+
+    /************************************   图片保存    ********************************************/
+    /**
+     * 时间戳作为文件名
+     * @return
+     */
+    public static String getFileName(){
+        return "DAS_" + System.currentTimeMillis();
+    }
+
+    /**
+     * 文件目录
+     * @return .../<application package>/files/
+     */
+    private static File getFilesDir(){
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+            return App.ctx.getExternalFilesDir(null); //传null，访问的是files文件夹
+        }
+        return App.ctx.getFilesDir();
+    }
+
+    /**
+     * 保存图片到  .../<application package>/files/image/ 下
+     * @param bitmap
+     * @param fileName
+     * @return  是否保存成功
+     */
+    public static boolean saveImageInFileDirs(Context context,Bitmap bitmap, String fileName){
+        boolean isSuccess = false;
+        String path = getFilesDir() + "/image/";
+        File dirFile = new File(path);
+        if (!dirFile.exists()) {
+            dirFile.mkdirs();
+        }
+        File file = new File(path, fileName + ".jpg");
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            //format：JPEG, PNG 和 WEBP，保存JPEG比PNG格式的文件小。
+            isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        KLog.e(TAG,"Bitmap已保存至" + file.getAbsolutePath());
+        return isSuccess;
+    }
+
+    /**
+     * 保存图片到 /storage/emulated/0/<application package>/DASImage/ 下
+     * 且更新到图库
+     * @param bitmap
+     * @param fileName
+     * @return 是否保存成功
+     */
+    public static boolean saveImageInSdCard(Bitmap bitmap, String fileName){
+        boolean isSuccess = false;
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                    File.separator + App.ctx.getPackageName() +  File.separator + "DASImage";
+            File dirFile = new File(path);
+            if (!dirFile.exists()) {
+                dirFile.mkdirs();
+            }
+            File file = new File(path, fileName + ".jpg");
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                //format：JPEG, PNG 和 WEBP，保存JPEG比PNG格式的文件小。
+                isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+
+                //通知图库更新
+                Uri uri = Uri.fromFile(file);
+                App.ctx.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+            KLog.e(TAG,"Bitmap已保存至" + file.getAbsolutePath());
+        }
+        return isSuccess;
+    }
+
+
+
 }

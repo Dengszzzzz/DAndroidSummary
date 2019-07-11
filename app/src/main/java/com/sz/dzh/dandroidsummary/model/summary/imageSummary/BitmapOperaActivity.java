@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.socks.library.KLog;
@@ -33,6 +34,8 @@ public class BitmapOperaActivity extends BaseActivity {
     @BindView(R.id.iv_show)
     ImageView mIvShow;
 
+    private Bitmap mBitmap;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,31 +45,65 @@ public class BitmapOperaActivity extends BaseActivity {
         tvTitle.setText("相册拍照、图片压缩保存");
     }
 
-    @OnClick(R.id.btn_select)
-    public void onViewClicked() {
-        SelectPhotoDialogFragment2 photoDialogFragment2 = SelectPhotoDialogFragment2.newInstance(1);
-        photoDialogFragment2.setDialogSelect(new IDialogSelect() {
-            @Override
-            public void onSelected(int i, Object o) {
-                switch (i) {
-                    case 1:  //拍照
-                    case 2:  //从图库选择图片
-                    case 3:  //剪切图
-                        //目前返回的都是uri的路径
+    @OnClick({R.id.btn_select, R.id.btn_save, R.id.btn_save2})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_select:
+                SelectPhotoDialogFragment2 photoDialogFragment2 = SelectPhotoDialogFragment2.newInstance(1);
+                photoDialogFragment2.setDialogSelect(new IDialogSelect() {
+                    @Override
+                    public void onSelected(int i, Object o) {
                         String imageUri = (String) o;
-                        KLog.e("BitmapUtils","imageUri--" + imageUri);
-                        if (!TextUtils.isEmpty(imageUri)) {
-                            String path = UriToPathUtils.getImageAbsolutePath(BitmapOperaActivity.this, Uri.parse(imageUri));
-                            Bitmap bitmap = BitmapUtils.getCompressBitmap(path);
-                            KLog.e("BitmapUtils", "最终压缩后图片的大小" + (bitmap.getByteCount() / 1024 + "KB"));
-                            if (bitmap != null) {
-                                mIvShow.setImageBitmap(bitmap);
-                            }
+                        KLog.e("BitmapUtils", "imageUri--" + imageUri);
+                        switch (i) {
+                            case 1:  //拍照
+                                if (!TextUtils.isEmpty(imageUri)){
+                                    String path = UriToPathUtils.getRealFilePath(BitmapOperaActivity.this, Uri.parse(imageUri));
+                                    mBitmap = BitmapUtils.getCompressBitmap(path);
+                                    if (mBitmap != null) {
+                                        mIvShow.setImageBitmap(mBitmap);
+                                    }
+                                }
+                                break;
+                            case 2:  //从图库选择图片
+                                break;
+                            case 3:  //剪切图
+                                //目前返回的都是uri的路径
+                                if (!TextUtils.isEmpty(imageUri)) {
+                                    String path = UriToPathUtils.getImageAbsolutePath(BitmapOperaActivity.this, Uri.parse(imageUri));
+                                    mBitmap = BitmapUtils.getCompressBitmap(path);
+                                    if (mBitmap != null) {
+                                        mIvShow.setImageBitmap(mBitmap);
+                                    }
+                                }
+                                break;
                         }
-                        break;
+                    }
+                });
+                photoDialogFragment2.show(getFragmentManager(), "photoDialogFragment");
+                break;
+            case R.id.btn_save:
+                //保存到FileDirs
+                if(mBitmap!=null){
+                   boolean isSuccess =  BitmapUtils.saveImageInFileDirs(BitmapOperaActivity.this,mBitmap,BitmapUtils.getFileName());
+                   if(isSuccess){
+                       ToastUtils.showToast("已保存到.../<application package>/files/image/ 下");
+                   }else{
+                       ToastUtils.showToast("保存失败");
+                   }
                 }
-            }
-        });
-        photoDialogFragment2.show(getFragmentManager(), "photoDialogFragment");
+                break;
+            case R.id.btn_save2:
+                //保存到sd卡，且更新图库
+                if(mBitmap!=null){
+                    boolean isSuccess =  BitmapUtils.saveImageInSdCard(mBitmap, BitmapUtils.getFileName());
+                    if(isSuccess){
+                        ToastUtils.showToast("已保存到/storage/emulated/0/com.sz.dzh.dandroidsummary/DASImage/下，且更新了图库");
+                    }else{
+                        ToastUtils.showToast("保存失败");
+                    }
+                }
+                break;
+        }
     }
 }
