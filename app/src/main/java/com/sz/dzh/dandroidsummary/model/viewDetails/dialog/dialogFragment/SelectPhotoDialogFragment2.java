@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.socks.library.KLog;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.base.App;
 import com.sz.dzh.dandroidsummary.utils.AppUtils;
@@ -32,29 +33,31 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by dengzh on 2018/5/7.
+ * 相册选择和拍照要优化的地方很多，比如选择图片如何选多张图片、拍照的Uri问题、拍照保存的图片路径、图片剪切、加载图片太大等问题。
+ * 如果只是简单的选择照片和拍照，记得处理好拍照文件保存路径，Uri问题。注意onActivityResult(...)的返回结果
  */
 
 public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements View.OnClickListener {
 
-    public static final int REQUEST_TAKEPHOTO = 1; // 拍照
-    public static final int REQUEST_GALLERY = 2;   // 从相册中选择
+    public static final int REQUEST_TAKEPHOTO = 1;       // 拍照
+    public static final int REQUEST_GALLERY = 2;         // 从相册中选择
     private static final int CROP_SMALL_PICTURE = 10;    // 剪切图片
 
-    private String IMAGE_PATH;  //图片保存路径
-    private Uri imageUri;   //Uri.parse(IMAGE_FILE_LOCATION); ;//The Uri to store the big bitmap
-    private int tag;   //传1的意义是，不吊起切图
+    private String imagePath;  //图片保存路径,如 com.sz.dzh.dandroidsummary.fileProvider/my_images/DAS_1562837817999.jpg
+    private Uri imageUri;      //图片Uri，如    content://com.sz.dzh.dandroidsummary.fileProvider/my_images/DAS_1562837817999.jpg
+    private int type;          //0-剪切图片  1-不剪切图片
 
 
     private TextView takePhotoTv,selectPhotoTv,cancleTv;
 
     /**
-     * @param tag 0-剪切图片  1-不剪切图片
+     * @param type 0-剪切图片  1-不剪切图片
      * @return
      */
-    public static SelectPhotoDialogFragment2 newInstance(int tag) {
+    public static SelectPhotoDialogFragment2 newInstance(int type) {
         SelectPhotoDialogFragment2 fragment = new SelectPhotoDialogFragment2();
         Bundle bundle = new Bundle();
-        bundle.putInt("tag", tag);
+        bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -62,7 +65,7 @@ public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements Vi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        tag = getArguments().getInt("tag");
+        type = getArguments().getInt("type");
     }
 
 
@@ -108,14 +111,16 @@ public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements Vi
      */
     private void onCamera() {
         if (AppUtils.hasSdcard()) {
-            //1.创建图片保存文件夹
-            IMAGE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() +
+            //1.创建图片文件夹
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
                     File.separator + App.ctx.getPackageName() +  File.separator + "DASImage";
-            File dirFile = new File(IMAGE_PATH);
+            imagePath = path +  File.separator + BitmapUtils.getFileName() + ".jpg";
+            //创建目录
+            File dirFile = new File(path);
             if (!dirFile.exists()) {
                 dirFile.mkdirs();
             }
-            File file = new File(IMAGE_PATH, BitmapUtils.getFileName() + ".jpg");
+            File file = new File(imagePath);
             //2.获取Uri
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
                 imageUri = FileProvider.getUriForFile(getActivity(), getActivity().getPackageName() + ".fileProvider", file);
@@ -136,9 +141,7 @@ public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements Vi
      */
     private void onGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
-        // 指定调用相机拍照后照片的储存路径
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                "image/*");
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(intent, REQUEST_GALLERY);
     }
 
@@ -166,11 +169,11 @@ public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements Vi
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_TAKEPHOTO:  //拍照，data为null
-                    //data为null，imageUri为content://com.sz.dzh.dandroidsummary.fileProvider/my_images/DAS_1562837817999.jpg
-                    if (tag == 1) {
-                        if (imageUri != null && mDialogSelect != null) {
-                            mDialogSelect.onSelected(1, imageUri.toString());
+                case REQUEST_TAKEPHOTO:  //拍照，data为null，因为是保存在指定路径下，所以获取图片，直接拿那个路径即可
+                    //imageUri为content://com.sz.dzh.dandroidsummary.fileProvider/my_images/DAS_1562837817999.jpg
+                    if (type == 1) {
+                        if (mDialogSelect != null) {
+                            mDialogSelect.onSelected(1, imagePath);
                             dismiss();
                         }
                     } else {
@@ -180,7 +183,7 @@ public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements Vi
                 case REQUEST_GALLERY:  //画库选择图片
                     //data 为 content://media/external/file/1710928 flg=0x1
                     if (data != null) {
-                        if (tag == 1) {
+                        if (type == 1) {
                             if (mDialogSelect != null) {
                                 mDialogSelect.onSelected(2, data.getData().toString());
                                 dismiss();

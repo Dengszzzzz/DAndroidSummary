@@ -3,6 +3,7 @@ package com.sz.dzh.dandroidsummary.model.summary.imageSummary;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -56,19 +57,15 @@ public class BitmapOperaActivity extends BaseActivity {
                         String imageUri = (String) o;
                         KLog.e("BitmapUtils", "imageUri--" + imageUri);
                         switch (i) {
-                            case 1:  //拍照
+                            case 1:  //拍照,返回的是图片路径，如：com.sz.dzh.dandroidsummary.fileProvider/my_images/DAS_1562837817999.jpg
                                 if (!TextUtils.isEmpty(imageUri)){
-                                    String path = UriToPathUtils.getRealFilePath(BitmapOperaActivity.this, Uri.parse(imageUri));
-                                    mBitmap = BitmapUtils.getCompressBitmap(path);
+                                    mBitmap = BitmapUtils.getCompressBitmap(imageUri);
                                     if (mBitmap != null) {
                                         mIvShow.setImageBitmap(mBitmap);
                                     }
                                 }
                                 break;
-                            case 2:  //从图库选择图片
-                                break;
-                            case 3:  //剪切图
-                                //目前返回的都是uri的路径
+                            case 2:  //从图库选择图片，返回的是Uri，如：content://media/external/file/1710928 flg=0x1
                                 if (!TextUtils.isEmpty(imageUri)) {
                                     String path = UriToPathUtils.getImageAbsolutePath(BitmapOperaActivity.this, Uri.parse(imageUri));
                                     mBitmap = BitmapUtils.getCompressBitmap(path);
@@ -76,6 +73,9 @@ public class BitmapOperaActivity extends BaseActivity {
                                         mIvShow.setImageBitmap(mBitmap);
                                     }
                                 }
+                                break;
+                            case 3:  //剪切图
+
                                 break;
                         }
                     }

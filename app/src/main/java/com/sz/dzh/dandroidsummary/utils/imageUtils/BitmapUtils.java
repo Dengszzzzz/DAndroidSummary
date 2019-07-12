@@ -101,8 +101,10 @@ public class BitmapUtils {
                 int picWidth = options.outWidth;
                 int picHeight = options.outHeight;
                 KLog.e(TAG, "宽高压缩前图片宽度="+ picWidth + "，高度=" + picHeight);
-                //图片宽高大于所需宽高才压缩
-                if(picWidth > width || picHeight > height){
+                //如果原图，宽比高大，则 宽/height，高/width比。否则，宽/width，高/height比。
+                if(picWidth>picHeight && (picWidth > height || picHeight > width)){
+                    options.inSampleSize = Math.max(options.outWidth / height, options.outHeight / width);
+                }else if(picWidth > width || picHeight > height){
                     options.inSampleSize = Math.max(options.outWidth / width, options.outHeight / height);
                 }else{
                     options.inSampleSize = 1;

@@ -255,6 +255,7 @@
         <activity android:name=".model.summary.imageSummary.ImageListActivity" />
         <activity android:name=".model.summary.imageSummary.ImageLoadActivity" />
         <activity android:name=".model.summary.imageSummary.BitmapOperaActivity" />
+        <activity android:name=".model.problems.ViewRotationActivity" />
 
 
     </application>
