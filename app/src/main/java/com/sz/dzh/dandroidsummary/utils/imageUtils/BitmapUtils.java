@@ -101,6 +101,7 @@ public class BitmapUtils {
                 int picWidth = options.outWidth;
                 int picHeight = options.outHeight;
                 KLog.e(TAG, "宽高压缩前图片宽度="+ picWidth + "，高度=" + picHeight);
+
                 //如果原图，宽比高大，则 宽/height，高/width比。否则，宽/width，高/height比。
                 if(picWidth>picHeight && (picWidth > height || picHeight > width)){
                     options.inSampleSize = Math.max(options.outWidth / height, options.outHeight / width);

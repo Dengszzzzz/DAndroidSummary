@@ -204,6 +204,4 @@ public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements Vi
     }
 
 
-
-
 }

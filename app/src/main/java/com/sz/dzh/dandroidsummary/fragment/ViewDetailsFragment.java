@@ -18,6 +18,7 @@ import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.viewDetails.anim.AnimListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.customview.CustomListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.DialogListActivity;
+import com.sz.dzh.dandroidsummary.model.viewDetails.imageView.ImageViewListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.popwindow.PopWindowListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.ViewPagerListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabPagerActivity;
@@ -67,6 +68,7 @@ public class ViewDetailsFragment extends BaseFragment {
         mList.add(new ClazzBean("WebView", WebListActivity.class));
         mList.add(new ClazzBean("自定义View", CustomListActivity.class));
         mList.add(new ClazzBean("动画Anim", AnimListActivity.class));
+        mList.add(new ClazzBean("ImageView", ImageViewListActivity.class));
 
         mAdapter = new BaseListAdapter(mList);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
