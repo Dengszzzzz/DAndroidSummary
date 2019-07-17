@@ -148,7 +148,8 @@ public class RxConditionActivity extends RxOperatorBaseActivity{
 
     /**
      *  takeUntil（）
-     *  作用: 执行到某个条件时，停止发送事件
+     *  接收第一个Observable（调用takUtil的Observable）发送的数据，当第二个Observable
+     *  （takUtil参数中的Observable）发送数据时，两个Obserable会同时取消订阅。
      */
     private void takeUntil(){
         //（原始）第1个Observable：每隔1s发送1个数据 = 从0开始，每次递增1
@@ -263,7 +264,7 @@ public class RxConditionActivity extends RxOperatorBaseActivity{
         list.add(Observable.just(4,5,6));
 
         // 一共需要发送2个Observable的数据
-        // 但由于使用了amba（）,所以仅发送先发送数据的Observable,即第二个（因为第1个延时了）
+        // 但由于使用了amba（）,所以仅发送先发送数据的Observable,也就是第2个Observable
         Observable.amb(list).subscribe(new Consumer<Integer>() {
             @Override
             public void accept(Integer integer) throws Exception {

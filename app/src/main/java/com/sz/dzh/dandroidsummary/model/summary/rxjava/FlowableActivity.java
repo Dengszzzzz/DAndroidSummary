@@ -37,7 +37,7 @@ public class FlowableActivity extends RxOperatorBaseActivity {
      * 演示创建，也可以使用链式
      */
     private void create() {
-        //步骤1：创建被观察者 =  Flowable
+        //步骤1：上流发送事件，传入背压参数
         Flowable<Integer> upStream = Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
             public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
@@ -47,9 +47,8 @@ public class FlowableActivity extends RxOperatorBaseActivity {
                 emitter.onComplete();
             }
         }, BackpressureStrategy.ERROR);
-        //传入背压参数
 
-        // 步骤2：创建观察者 =  Subscriber
+        // 步骤2：下流
         Subscriber<Integer> downStream = new Subscriber<Integer>() {
             @Override
             public void onSubscribe(Subscription s) {
@@ -76,8 +75,7 @@ public class FlowableActivity extends RxOperatorBaseActivity {
                 Log.d(TAG, "onComplete");
             }
         };
-
-        //步骤3：建立订阅关系
+        //步骤3：订阅
         upStream.subscribe(downStream);
     }
 
@@ -96,17 +94,16 @@ public class FlowableActivity extends RxOperatorBaseActivity {
                 Log.d(TAG, "观察者可接收事件数量 = " + emitter.requested());
 
                 // 一共发送4个事件
-//                Log.d(TAG, "发送事件 1");
-//                emitter.onNext(1);
-//                Log.d(TAG, "发送事件 2");
-//                emitter.onNext(2);
-//                Log.d(TAG, "发送事件 3");
-//                emitter.onNext(3);
-//                Log.d(TAG, "发送事件 4");
-//                emitter.onNext(4);
-//                Log.d(TAG, "发送完成");
-//                emitter.onComplete();
-
+                Log.d(TAG, "发送事件 1");
+                emitter.onNext(1);
+                Log.d(TAG, "发送事件 2");
+                emitter.onNext(2);
+                Log.d(TAG, "发送事件 3");
+                emitter.onNext(3);
+                Log.d(TAG, "发送事件 4");
+                emitter.onNext(4);
+                Log.d(TAG, "发送完成");
+                emitter.onComplete();
 
 //                //模拟缓存超过128
 //                for (int i = 0;i< 129; i++) {
@@ -116,13 +113,13 @@ public class FlowableActivity extends RxOperatorBaseActivity {
 //                emitter.onComplete();
 //
             }
-        }, BackpressureStrategy.ERROR)
+        }, BackpressureStrategy.ERROR)  //缓存区超过128，直接抛出异常
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onSubscribe(Subscription s) {
-                        //  在异步订阅情况下，一定要调用request，否则下流不接收事件
+                        // 在异步订阅情况下，一定要调用request，否则下流不接收事件
                         // 作用：决定观察者能够接收多少个事件
                         s.request(3);
                     }
@@ -134,7 +131,7 @@ public class FlowableActivity extends RxOperatorBaseActivity {
 
                     @Override
                     public void onError(Throwable t) {
-                        Log.w(TAG, "onError: ", t);
+                        Log.d(TAG, "onError：", t);
                     }
 
                     @Override
