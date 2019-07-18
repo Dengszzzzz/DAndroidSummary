@@ -18,7 +18,7 @@
             android:textSize="16sp" />
 
         <View
-            style="@style/line_view"/>
+            style="@style/line"/>
 
         <TextView
             android:id="@+id/selectPhotoTv"
@@ -30,7 +30,7 @@
             android:textSize="16sp" />
 
         <View
-            style="@style/line_view"
+            style="@style/line"
             android:layout_height="5dp"/>
 
         <TextView

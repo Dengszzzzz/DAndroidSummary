@@ -12,19 +12,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="15dp">
+
     <TextView
         style="@style/myTextView"
-        android:text="基础创建"/>
+        android:text="组合多个被观察者"/>
 
-        <Button
-            android:id="@+id/btn_create"
-            style="@style/myButton"
-            android:text="create"/>
-
-        <TextView
-            style="@style/myTextView"
-            android:text="快速创建"
-            android:layout_marginTop="15dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,26 +24,27 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_just"
+                android:id="@+id/btn_concat"
                 style="@style/myButton"
-                android:text="just"/>
+                android:text="concat"/>
 
             <Button
-                android:id="@+id/btn_fromArray"
+                android:id="@+id/btn_merge"
                 style="@style/myButton"
-                android:text="fromArray"/>
+                android:text="merge"/>
             <Button
-                android:id="@+id/btn_fromIterable"
+                android:id="@+id/btn_concatDelayError"
                 style="@style/myButton"
-                android:text="fromIterable"/>
+                android:text="concatDelayError"/>
 
 
         </LinearLayout>
 
+
         <TextView
             style="@style/myTextView"
-            android:text="延迟创建"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:text="合并多个事件："/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,36 +52,46 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_defer"
+                android:id="@+id/btn_zip"
                 style="@style/myButton"
-                android:text="defer"/>
+                android:text="zip"/>
 
             <Button
-                android:id="@+id/btn_timer"
+                android:id="@+id/btn_combineLatest"
                 style="@style/myButton"
-                android:text="timer"/>
+                android:text="combineLatest"/>
             <Button
-                android:id="@+id/btn_interval"
+                android:id="@+id/btn_reduce"
                 style="@style/myButton"
-                android:text="interval"/>
-
+                android:text="reduce"/>
+            <Button
+                android:id="@+id/btn_collect"
+                style="@style/myButton"
+                android:text="collect"/>
 
         </LinearLayout>
 
+
+        <TextView
+            style="@style/myTextView"
+            android:layout_marginTop="15dp"
+            android:text="其他："/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_intervalRange"
+                android:id="@+id/btn_startWith"
                 style="@style/myButton"
-                android:text="intervalRange"/>
+                android:text="startWith"/>
 
             <Button
-                android:id="@+id/btn_range"
+                android:id="@+id/btn_count"
                 style="@style/myButton"
-                android:text="range"/>
+                android:text="count"/>
+
 
         </LinearLayout>
 

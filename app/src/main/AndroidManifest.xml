@@ -258,6 +258,15 @@
         <activity android:name=".model.problems.ViewRotationActivity" />
         <activity android:name=".model.viewDetails.imageView.NiceImageActivity" />
         <activity android:name=".model.viewDetails.imageView.ImageViewListActivity" />
+        <activity android:name=".model.summary.rxjava.RxJavaListActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.RxJStudyListActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.RxCreateActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.RxFilterActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.RxTransformActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.RxCombineActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.RxFunctionActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.RxConditionActivity" />
+        <activity android:name=".model.summary.rxjava.rxStudy.FlowableActivity" />
 
 
     </application>

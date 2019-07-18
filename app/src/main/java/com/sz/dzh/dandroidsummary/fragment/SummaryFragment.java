@@ -20,6 +20,7 @@ import com.sz.dzh.dandroidsummary.model.summary.imageSummary.ImageListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.netSummary.NetActivity;
 import com.sz.dzh.dandroidsummary.model.summary.netSummary.NetListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.premission.PermissionActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.RxJavaListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.service.ServiceListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.storageSummary.StorageActivity;
 
@@ -65,6 +66,7 @@ public class SummaryFragment extends BaseFragment{
         mList.add(new ClazzBean("网络知识",NetListActivity.class));
         mList.add(new ClazzBean("权限管理", PermissionActivity.class));
         mList.add(new ClazzBean("图片知识详解", ImageListActivity.class));
+        mList.add(new ClazzBean("RxJava2学习笔记", RxJavaListActivity.class));
 
 
 

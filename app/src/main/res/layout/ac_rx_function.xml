@@ -12,46 +12,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="15dp">
-    <TextView
-        style="@style/myTextView"
-        android:text="基础创建"/>
 
-        <Button
-            android:id="@+id/btn_create"
-            style="@style/myButton"
-            android:text="create"/>
 
         <TextView
             style="@style/myTextView"
-            android:text="快速创建"
-            android:layout_marginTop="15dp"/>
+            android:text="各个事件操作符:"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_just"
-                style="@style/myButton"
-                android:text="just"/>
 
             <Button
-                android:id="@+id/btn_fromArray"
+                android:id="@+id/btn_do"
                 style="@style/myButton"
-                android:text="fromArray"/>
-            <Button
-                android:id="@+id/btn_fromIterable"
-                style="@style/myButton"
-                android:text="fromIterable"/>
+                android:text="do"/>
 
 
         </LinearLayout>
 
+
         <TextView
             style="@style/myTextView"
-            android:text="延迟创建"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:text="重试:"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,36 +44,42 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_defer"
+                android:id="@+id/btn_retry"
                 style="@style/myButton"
-                android:text="defer"/>
+                android:text="retry"/>
 
             <Button
-                android:id="@+id/btn_timer"
+                android:id="@+id/btn_retryUntil"
                 style="@style/myButton"
-                android:text="timer"/>
+                android:text="retryUntil"/>
             <Button
-                android:id="@+id/btn_interval"
+                android:id="@+id/btn_retryWhen"
                 style="@style/myButton"
-                android:text="interval"/>
-
+                android:text="retryWhen"/>
 
         </LinearLayout>
 
+
+        <TextView
+            style="@style/myTextView"
+            android:layout_marginTop="15dp"
+            android:text="重复发送:"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_intervalRange"
+                android:id="@+id/btn_repeat"
                 style="@style/myButton"
-                android:text="intervalRange"/>
+                android:text="repeat"/>
 
             <Button
-                android:id="@+id/btn_range"
+                android:id="@+id/btn_repeatWhen"
                 style="@style/myButton"
-                android:text="range"/>
+                android:text="repeatWhen"/>
+
 
         </LinearLayout>
 

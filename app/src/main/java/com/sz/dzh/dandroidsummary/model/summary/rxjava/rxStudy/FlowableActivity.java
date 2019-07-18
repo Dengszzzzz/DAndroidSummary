@@ -1,12 +1,18 @@
-package com.sz.dzh.dandroidsummary.model.summary.rxjava;
+package com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
-import com.socks.library.KLog;
+import com.sz.dzh.dandroidsummary.R;
+import com.sz.dzh.dandroidsummary.base.BaseActivity;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
@@ -20,17 +26,27 @@ import io.reactivex.schedulers.Schedulers;
  * 1.对应的观察者 Subscriber
  * 2.缓存区，默认大小 128,与Flowable的buffersize大小有关，当满128时，会溢出报错
  */
-public class FlowableActivity extends RxOperatorBaseActivity {
-    @Override
-    protected String getSubTitle() {
-        return "背压策略";
-    }
+public class FlowableActivity extends BaseActivity {
 
     @Override
-    protected void doSomething() {
-        //create();
-        //asynchronizedTest();
-        synchronizedTest();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.ac_rx_flowable);
+        ButterKnife.bind(this);
+        initTitle();
+        tvTitle.setText("背压问题");
+    }
+
+    @OnClick({R.id.btn_asynchronous, R.id.btn_synchronized})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_asynchronous:
+                asynchronizedTest();
+                break;
+            case R.id.btn_synchronized:
+                synchronizedTest();
+                break;
+        }
     }
 
     /**
@@ -146,7 +162,7 @@ public class FlowableActivity extends RxOperatorBaseActivity {
      * 同步订阅：
      * 不存在缓存区，request用于控制流速，下流需要多少，上流才发送多少
      */
-    private void synchronizedTest(){
+    private void synchronizedTest() {
         Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
             public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
@@ -188,6 +204,8 @@ public class FlowableActivity extends RxOperatorBaseActivity {
 
 
     }
+
+
 
 
     /***

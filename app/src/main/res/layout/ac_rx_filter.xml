@@ -12,65 +12,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="15dp">
-    <TextView
-        style="@style/myTextView"
-        android:text="基础创建"/>
 
         <Button
-            android:id="@+id/btn_create"
+            android:id="@+id/btn_filter"
             style="@style/myButton"
-            android:text="create"/>
+            android:text="filter"/>
 
-        <TextView
-            style="@style/myTextView"
-            android:text="快速创建"
-            android:layout_marginTop="15dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_just"
-                style="@style/myButton"
-                android:text="just"/>
-
-            <Button
-                android:id="@+id/btn_fromArray"
-                style="@style/myButton"
-                android:text="fromArray"/>
-            <Button
-                android:id="@+id/btn_fromIterable"
-                style="@style/myButton"
-                android:text="fromIterable"/>
-
-
-        </LinearLayout>
-
-        <TextView
-            style="@style/myTextView"
-            android:text="延迟创建"
-            android:layout_marginTop="15dp"/>
+        <Button
+            android:id="@+id/btn_ofType"
+            style="@style/myButton"
+            android:text="ofType"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_defer"
-                style="@style/myButton"
-                android:text="defer"/>
 
             <Button
-                android:id="@+id/btn_timer"
+                android:id="@+id/btn_skip"
                 style="@style/myButton"
-                android:text="timer"/>
+                android:text="skip"/>
+
             <Button
-                android:id="@+id/btn_interval"
+                android:id="@+id/btn_skipLast"
                 style="@style/myButton"
-                android:text="interval"/>
+                android:text="skipLast"/>
 
 
         </LinearLayout>
@@ -80,18 +47,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_intervalRange"
-                style="@style/myButton"
-                android:text="intervalRange"/>
 
             <Button
-                android:id="@+id/btn_range"
+                android:id="@+id/btn_distinct"
                 style="@style/myButton"
-                android:text="range"/>
+                android:text="distinct"/>
+
+            <Button
+                android:id="@+id/btn_distinctUntilChanged"
+                style="@style/myButton"
+                android:text="distinctUntilChanged"/>
+
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/btn_take"
+                style="@style/myButton"
+                android:text="take"/>
+
+            <Button
+                android:id="@+id/btn_takeLast"
+                style="@style/myButton"
+                android:text="takeLast"/>
+
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
