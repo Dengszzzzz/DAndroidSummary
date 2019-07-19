@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
+import com.socks.library.KLog;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.base.BaseActivity;
 
@@ -22,9 +23,15 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by administrator on 2018/11/9.
- * Flowable:背压
- * 1.对应的观察者 Subscriber
- * 2.缓存区，默认大小 128,与Flowable的buffersize大小有关，当满128时，会溢出报错
+ *
+ * 背压问题：
+ *     当在异步订阅中，通过Observable发射、处理、响应数据流时，如果事件产生的速度远远快于事件消费的速度，这些没来得及
+ * 处理的数据就会越积越多，这些数据不会丢失，也不会被垃圾回收机制回收，而是存放在一个异步缓存池中，缓存池的数据一直
+ * 得不到处理，最终会导致OOM等异常。这就是响应式编程中的背压问题。总结一下就是： 事件产生的速度大于事件消费的速度，
+ * 数据堆积，最终造成OOM等异常。
+ *     RxJava2把对背压问题的处理逻辑从Observable中抽取出来产生了新的可观察对象Flowable，它是在Observable基础
+ * 上做了优化，所以Observable能做的，它都能做，但是加了背压支持和其他的逻辑处理，它的效率比Observable慢得多，所
+ * 以在需要用到背压的时候再用Flowable，其他时候还是正常使用Observable。
  */
 public class FlowableActivity extends BaseActivity {
 
@@ -50,76 +57,42 @@ public class FlowableActivity extends BaseActivity {
     }
 
     /**
-     * 演示创建，也可以使用链式
-     */
-    private void create() {
-        //步骤1：上流发送事件，传入背压参数
-        Flowable<Integer> upStream = Flowable.create(new FlowableOnSubscribe<Integer>() {
-            @Override
-            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
-                emitter.onNext(1);
-                emitter.onNext(2);
-                emitter.onNext(3);
-                emitter.onComplete();
-            }
-        }, BackpressureStrategy.ERROR);
-
-        // 步骤2：下流
-        Subscriber<Integer> downStream = new Subscriber<Integer>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-                // 对比Observer传入的Disposable参数，Subscriber此处传入的参数 = Subscription
-                // 相同点：Subscription具备Disposable参数的作用，即Disposable.dispose()切断连接, 同样的调用Subscription.cancel()切断连接
-                // 不同点：Subscription增加了void request(long n)
-                Log.d(TAG, "onSubscribe");
-                s.request(Long.MAX_VALUE);
-
-            }
-
-            @Override
-            public void onNext(Integer integer) {
-                Log.d(TAG, "onNext: " + integer);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                Log.w(TAG, "onError: ", t);
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(TAG, "onComplete");
-            }
-        };
-        //步骤3：订阅
-        upStream.subscribe(downStream);
-    }
+     * Flowable 和 Observable的不同点：
+     * 1、create方法中多了一个BackpressureStrategy类型的参数。
+     * 2、Flowable发射数据时，使用特有的发射器FlowableEmitter，不同于Observable的ObservableEmitter。
+     * 3、Subscriber中，方法onSubscribe回调的参数不是Disposable而是Subscription。
+     * */
 
     /**
      * Flowable与Observable在功能上的区别主要是 多了背压的功能
      * 异步订阅情况举例
      * 1.上流发送很多事件，放入缓存区
      * 2.下流 指定从缓存区 获取多少个事件  request()
+     *
+     * 打印结果：
+     * request(3),接收3个事件，所以打印出 ———— 接收到了事件1、...2、...3
      */
     private void asynchronizedTest() {
         Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
             public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
 
-                //在异步中，emitter.requested() 是128，
-                Log.d(TAG, "观察者可接收事件数量 = " + emitter.requested());
+                //异步订阅时，代表的是 异步缓存池中可放入数据的数量，一开始是128，当产生10个事件而没有消费时，此时这个值是128-10=118。
+                KLog.d(TAG, "异步缓存池中可放入数据的数量 = " + emitter.requested());
 
                 // 一共发送4个事件
-                Log.d(TAG, "发送事件 1");
+                KLog.d(TAG, "发送事件 1");
                 emitter.onNext(1);
-                Log.d(TAG, "发送事件 2");
+                KLog.d(TAG, "发送事件 2");
                 emitter.onNext(2);
-                Log.d(TAG, "发送事件 3");
+                KLog.d(TAG, "发送事件 3");
                 emitter.onNext(3);
-                Log.d(TAG, "发送事件 4");
+                KLog.d(TAG, "发送事件 4");
                 emitter.onNext(4);
-                Log.d(TAG, "发送完成");
+                KLog.d(TAG, "发送事件 onComplete()");
                 emitter.onComplete();
+
+                KLog.d(TAG, "异步缓存池中可放入数据的数量 = " + emitter.requested());
 
 //                //模拟缓存超过128
 //                for (int i = 0;i< 129; i++) {
@@ -136,23 +109,23 @@ public class FlowableActivity extends BaseActivity {
                     @Override
                     public void onSubscribe(Subscription s) {
                         // 在异步订阅情况下，一定要调用request，否则下流不接收事件
-                        // 作用：决定观察者能够接收多少个事件
+                        // 只接收多少个事件
                         s.request(3);
                     }
 
                     @Override
                     public void onNext(Integer integer) {
-                        Log.d(TAG, "接收到了事件" + integer);
+                        KLog.d(TAG, "接收到了事件" + integer);
                     }
 
                     @Override
                     public void onError(Throwable t) {
-                        Log.d(TAG, "onError：", t);
+                        KLog.d(TAG, "onError：", t);
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete");
+                        KLog.d(TAG, "onComplete");
                     }
                 });
     }
@@ -166,11 +139,13 @@ public class FlowableActivity extends BaseActivity {
         Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
             public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
-                // 调用emitter.requested()获取当前观察者需要接收的事件数量
-                long n = emitter.requested();
-                Log.d(TAG, "观察者可接收事件" + n);
+
+                long requestCount = emitter.requested();
+                //同步订阅时，代表的是下游需要的事件数量
+                KLog.d(TAG, "下游可接收事件数量 = " + requestCount);
+
                 // 根据emitter.requested()的值，即当前观察者需要接收的事件数量来发送事件
-                for (int i = 0; i < n; i++) {
+                for (int i = 0; i < requestCount; i++) {
                     Log.d(TAG, "发送了事件" + i);
                     emitter.onNext(i);
                 }
@@ -179,26 +154,24 @@ public class FlowableActivity extends BaseActivity {
                 .subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onSubscribe(Subscription s) {
-                        Log.d(TAG, "onSubscribe");
-                        // 设置观察者每次能接受10个事件
-                        s.request(10);
-                        //可以多次调用request
-                        s.request(20);
+                        //Subscription.request(n) 可以累加
+                        s.request(3);
+                        s.request(7);
                     }
 
                     @Override
                     public void onNext(Integer integer) {
-                        Log.d(TAG, "接收到了事件" + integer);
+                        KLog.d(TAG, "接收到了事件" + integer);
                     }
 
                     @Override
                     public void onError(Throwable t) {
-                        Log.w(TAG, "onError: ", t);
+                        KLog.w(TAG, "onError: ", t);
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete");
+                        KLog.d(TAG, "onComplete");
                     }
                 });
 

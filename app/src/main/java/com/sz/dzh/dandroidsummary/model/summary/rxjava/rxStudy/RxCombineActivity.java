@@ -91,7 +91,7 @@ public class RxCombineActivity extends BaseActivity {
 
     /**
      * concat（） / concatArray（）
-     * 作用:组合多个被观察者一起发送数据，合并后 按发送顺序串行执行
+     * 作用:组合多个被观察者一起发送数据，合并后按发送顺序串行执行
      * 区别：组合被观察者的数量，即concat（）组合被观察者数量≤4个，而concatArray（）则可＞4个
      */
     private void concat() {
@@ -117,7 +117,6 @@ public class RxCombineActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        KLog.d(TAG, "对Complete事件作出响应");
                     }
                 });
     }
@@ -126,15 +125,17 @@ public class RxCombineActivity extends BaseActivity {
     /**
      * merge（） / mergeArray（）
      * 作用：
-     * 组合多个被观察者一起发送数据，合并后 按时间线并行执行
-     * 两者区别 也是数量范围不同
+     * 组合多个被观察者一起发送数据，合并后按时间线并行执行
+     *
+     * 打印结果：
+     * Observable1 和 Observable2 数据掺杂在一起
      */
     private void merge() {
         Observable.merge(
-                //从0开始，发3个，每秒1个
+                //从0开始，发3个，1s后开始，每秒1个
                 Observable.intervalRange(0, 3, 1, 1, TimeUnit.SECONDS),
-                //从2开始，发5个，每秒1个
-                Observable.intervalRange(2, 5, 1, 1, TimeUnit.SECONDS))
+                //从10开始，发5个，1s后开始，每秒1个
+                Observable.intervalRange(10, 5, 1, 1, TimeUnit.SECONDS))
                 .subscribe(new Observer<Long>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -164,6 +165,9 @@ public class RxCombineActivity extends BaseActivity {
      * 问题：使用concat()和merge()操作符时，若其中1个被观察者发出onError事件，则会马上终止其他被观察者继续发送事件
      * 解决方法：
      * 希望onError事件推迟到其他被观察者发送事件结束后才触发。
+     *
+     * 打印结果：
+     * 完成Observable2的事件接受完毕后，执行onError。要看区别可以把concatArrayDelayError 改成 concatArray
      */
     private void concatDelayError() {
         //如果用concat，被观察者2是没机会发出7事件的。
@@ -208,32 +212,35 @@ public class RxCombineActivity extends BaseActivity {
      * 作用:
      * 合并 多个被观察者（Observable）发送的事件，生成一个新的事件序列（即组合过后的事件序列）
      * ，最终合并的事件数量 = 多个观察者中数量最少的数量
+     *
+     * 打印结果：
+     * 1A、2B、3C 就结束了，observable2的D事件没接收
      */
     private void zip() {
         //第一个观察者
         Observable<Integer> observable1 = Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                KLog.d(TAG, "被观察者1发送了事件1");
+                KLog.d(TAG, "Observable1 emitter 1");
                 emitter.onNext(1);
-                KLog.d(TAG, "被观察者1发送了事件2");
+                KLog.d(TAG, "Observable1 emitter 2");
                 emitter.onNext(2);
-                KLog.d(TAG, "被观察者1发送了事件3");
+                KLog.d(TAG, "Observable1 emitter 3");
                 emitter.onNext(3);
-                emitter.onComplete();    //加了complete()，其他事件的未发送的也不再发送了
+                emitter.onComplete();
             }
         }).subscribeOn(Schedulers.io());
 
         Observable<String> observable2 = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                KLog.d(TAG, "被观察者2发送了事件A");
+                KLog.d(TAG, "Observable2 emitter A");
                 emitter.onNext("A");
-                KLog.d(TAG, "被观察者2发送了事件B");
+                KLog.d(TAG, "Observable2 emitter B");
                 emitter.onNext("B");
-                KLog.d(TAG, "被观察者2发送了事件C");
+                KLog.d(TAG, "Observable2 emitter C");
                 emitter.onNext("C");
-                KLog.d(TAG, "被观察者2发送了事件D");
+                KLog.d(TAG, "Observable2 emitter D");
                 emitter.onNext("D");
                 emitter.onComplete();
             }
@@ -275,7 +282,8 @@ public class RxCombineActivity extends BaseActivity {
      * 当两个Observables中的任何一个发送了数据后，将先发送了数据的Observables 的最新（最后）一个数据
      * 与 另外一个Observable发送的每个数据结合，最终基于该函数的结果发送数据
      * <p>
-     * 与Zip（）的区别：Zip（） = 按个数合并，即1对1合并；CombineLatest（） = 按时间合并，即在同一个时间点上合并
+     * 与zip（）的区别：zip（） = 按个数合并，即1对1合并；CombineLatest（） = 按时间合并，即在同一个时间点上合并
+     *
      */
     private void combineLatest() {
         Observable.combineLatest(Observable.just(1, 2, 3),
@@ -299,8 +307,10 @@ public class RxCombineActivity extends BaseActivity {
 
     /**
      * reduce()
-     * 作用
-     * 把被观察者需要发送的事件聚合成1个事件 & 发送
+     * 作用：把被观察者需要发送的事件缩减成1个事件 & 发送
+     *
+     * 打印结果：
+     * 1*2*3*4 = 24
      */
     private void reduce() {
         Observable.just(1, 2, 3, 4)

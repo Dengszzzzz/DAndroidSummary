@@ -20,6 +20,7 @@ public class RxJavaListActivity extends BaseListShowActivity {
     @Override
     protected void initData() {
         addClazzBean("RxJava2 基础知识", RxJStudyListActivity.class);
+     //   addClazzBean("RxJava2 实际应用场景", RxActualUseListActivity.class);
     }
 
 

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
+import com.socks.library.KLog;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.base.BaseActivity;
 
@@ -86,6 +87,10 @@ public class RxConditionActivity extends BaseActivity {
      * all()
      * 作用： 判断发送的每项数据是否都满足 设置的函数条件
      * 若满足，返回 true；否则，返回 false
+     *
+     * 例子：判断是否都小于10
+     * 打印结果：
+     * true
      */
     private void all() {
         Observable.just(1, 2, 3, 4, 5, 6)
@@ -93,13 +98,11 @@ public class RxConditionActivity extends BaseActivity {
                     @Override
                     public boolean test(Integer integer) throws Exception {
                         return (integer <= 10);
-                        //判断Obervable发送的全部数据是否都满足integer<=10
                     }
                 }).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
-                Log.d(TAG, "result is " + aBoolean);
-                // 输出返回结果
+                KLog.d(TAG, "接收事件：" + aBoolean);
             }
         });
     }
@@ -108,36 +111,23 @@ public class RxConditionActivity extends BaseActivity {
      * takeWhile（）
      * 作用:  判断发送的每项数据是否满足 设置函数条件
      * 若发送的数据满足该条件，则发送该项数据；否则不再发送
+     *
+     * 例子：小于3的发送
+     * 打印结果：
+     * 0、1、2
      */
     private void takeWhile() {
-        // 1. 每1s发送1个数据 = 从0开始，递增1，即0、1、2、3
-        Observable.interval(1, TimeUnit.SECONDS)
-                // 2. 通过takeWhile传入一个判断条件
+        //[0,5)，每秒递增1
+        Observable.intervalRange(0,5,0,1,TimeUnit.SECONDS)
                 .takeWhile(new Predicate<Long>() {
                     @Override
                     public boolean test(Long aLong) throws Exception {
-                        return aLong < 3;
-                        //当发送的数据满足<3时才发送Observable的数据
+                        return aLong < 3; //为true发送
                     }
-                }).subscribe(new Observer<Long>() {
+                }).subscribe(new Consumer<Long>() {
             @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Long aLong) {
-                Log.d(TAG, "发送了事件 " + aLong);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
+            public void accept(Long aLong) throws Exception {
+                KLog.d(TAG, "接收事件：" + aLong);
             }
         });
     }
@@ -147,73 +137,42 @@ public class RxConditionActivity extends BaseActivity {
      * skipWhile()
      * 作用: 判断发送的每项数据是否满足 设置函数条件
      * 直到该判断条件 = false时，才开始发送Observable的数据
+     *
+     * 例子：小于3的跳过
+     * 打印结果：
+     * 3、4
      */
     private void skipWhile() {
-        // 1. 每隔1s发送1个数据 = 从0开始，每次递增1
-        Observable.interval(1, TimeUnit.SECONDS)
-                // 2. 通过skipWhile（）设置判断条件
+        Observable.intervalRange(0,5,0,1,TimeUnit.SECONDS)
                 .skipWhile(new Predicate<Long>() {
                     @Override
                     public boolean test(Long aLong) throws Exception {
-                        return (aLong < 5);
-                        // 直到判断条件不成立 = false = 发射的数据≥5，才开始发送数据
+                        return aLong < 3; //为true跳过，不发送
                     }
-                }).subscribe(new Observer<Long>() {
+                }).subscribe(new Consumer<Long>() {
             @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Long aLong) {
-                Log.d(TAG, "发送了事件 " + aLong);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
+            public void accept(Long aLong) throws Exception {
+                KLog.d(TAG, "接收事件：" + aLong);
             }
         });
     }
 
     /**
      * takeUntil（）
-     * 接收第一个Observable（调用takUtil的Observable）发送的数据，当第二个Observable
-     * （takUtil参数中的Observable）发送数据时，两个Obserable会同时取消订阅。
+     * 发射事件，直到xxx时停止发射
+     * Observable1（调用takUtil的Observable）发送数据，当Observable2（takUtil参数中的Observable）发送数据时，两个Obserable会同时取消订阅。
+     *
+     * 例子：事件2，2.5s后发送，同时取消订阅。
+     * 打印结果：
+     * 0、1、2
      */
     private void takeUntil() {
-        //（原始）第1个Observable：每隔1s发送1个数据 = 从0开始，每次递增1
-        Observable.interval(1, TimeUnit.SECONDS)
-                // 第2个Observable：延迟5s后开始发送1个Long型数据
-                .takeUntil(Observable.timer(5, TimeUnit.SECONDS))
-                .subscribe(new Observer<Long>() {
-
-                    //结果：
-                    // 当第 5s 时，第2个 Observable 开始发送数据，于是（原始）第1个 Observable 停止发送数据
-
+        Observable.intervalRange(0,5,0,1,TimeUnit.SECONDS)
+                .takeUntil(Observable.timer(2500, TimeUnit.MILLISECONDS))
+                .subscribe(new Consumer<Long>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "开始采用subscribe连接");
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        Log.d(TAG, "接收到了事件" + aLong);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "对Error事件作出响应");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "对Complete事件作出响应");
+                    public void accept(Long aLong) throws Exception {
+                        KLog.d(TAG, "接收事件：" + aLong);
                     }
                 });
     }
@@ -221,36 +180,20 @@ public class RxConditionActivity extends BaseActivity {
 
     /**
      * skipUntil（）
-     * 作用: 等到 skipUntil（）传入的Observable开始发送数据，（原始）第1个Observable的数据才开始发送数据
+     * 跳过，直到xxx时才发射事件
+     * 等到 skipUntil（）传入的Observable开始发送数据，（原始）第1个Observable的数据才开始发送数据
+     *
+     * 例子：事件2，2.5s后发送。
+     * 打印结果：
+     * 3s后才开始打印 3、4
      */
     private void skipUntil() {
-        //（原始）第1个Observable：每隔1s发送1个数据 = 从0开始，每次递增1
-        Observable.interval(1, TimeUnit.SECONDS)
-                // 第2个Observable：延迟5s后开始发送1个Long型数据
-                .skipUntil(Observable.timer(5, TimeUnit.SECONDS))
-                .subscribe(new Observer<Long>() {
-
-                    //结果
-                    //5s后（ skipUntil（） 传入的Observable开始发送数据），（原始）第1个Observable的数据才开始发送
-
+        Observable.intervalRange(0,5,0,1,TimeUnit.SECONDS)
+                .skipUntil(Observable.timer(3, TimeUnit.SECONDS))
+                .subscribe(new Consumer<Long>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "开始采用subscribe连接");
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        Log.d(TAG, "接收到了事件" + aLong);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "对Error事件作出响应");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "对Complete事件作出响应");
+                    public void accept(Long aLong) throws Exception {
+                        KLog.d(TAG, "接收事件：" + aLong);
                     }
                 });
     }
@@ -260,13 +203,16 @@ public class RxConditionActivity extends BaseActivity {
      * SequenceEqual（）
      * 作用: 判定两个Observables需要发送的数据是否相同
      * 若相同，返回 true；否则，返回 false
+     *
+     * 打印结果：
+     * true
      */
     private void sequenceEqual() {
         Observable.sequenceEqual(Observable.just(3, 4, 5), Observable.just(3, 4, 5))
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        Log.d(TAG, "2个Observable是否相同：" + aBoolean);
+                        KLog.d(TAG, "接收事件：" + aBoolean);
                     }
                 });
     }
@@ -274,6 +220,9 @@ public class RxConditionActivity extends BaseActivity {
     /**
      * contains（）
      * 判断发送的数据中是否包含指定数据
+     *
+     * 打印结果：
+     * true
      */
     private void contains() {
         Observable.just(3, 4, 5)
@@ -281,7 +230,7 @@ public class RxConditionActivity extends BaseActivity {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        Log.d(TAG, "result is " + aBoolean);
+                        KLog.d(TAG, "接收事件：" + aBoolean);
                     }
                 });
     }
@@ -289,6 +238,9 @@ public class RxConditionActivity extends BaseActivity {
     /**
      * amb()
      * 作用： 当需要发送多个 Observable时，只发送 先发送数据的Observable的数据，而其余 Observable则被丢弃。
+     *
+     * 打印结果：
+     * 4、5、6
      */
     private void amb() {
         // 设置2个需要发送的Observable & 放入到集合中
@@ -299,12 +251,11 @@ public class RxConditionActivity extends BaseActivity {
         list.add(Observable.just(4, 5, 6));
 
         // 一共需要发送2个Observable的数据
-        // 但由于使用了amba（）,所以仅发送先发送数据的Observable,也就是第2个Observable
+        // 但由于使用了amb(),所以仅发送先发送数据的Observable,也就是第2个Observable
         Observable.amb(list).subscribe(new Consumer<Integer>() {
             @Override
             public void accept(Integer integer) throws Exception {
-                Log.e(TAG, "接收到了事件 " + integer);
-                //结果：发送数据的Observable的数据 = 4，5，6
+                KLog.d(TAG, "接收事件：" + integer);
             }
         });
     }
@@ -313,38 +264,47 @@ public class RxConditionActivity extends BaseActivity {
      * defaultIfEmpty（）
      * 作用:
      * 在不发送任何有效事件（ Next事件）、仅发送了 Complete 事件的前提下，发送一个默认值
+     *
+     * 打印结果：
+     * 10
      */
     private void defaultEmpty() {
+        //empty()就是只发 onComplete()事件
+        /*Observable.empty().defaultIfEmpty(10).subscribe(new Observer<Object>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Object o) {
+                KLog.d(TAG, "接收事件：" + o.toString());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                KLog.d(TAG, "onComplete");
+            }
+        });*/
+
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
                 // 不发送任何有效事件
-                //  emitter.onNext(1);
-                //  emitter.onNext(2);
-
+                // emitter.onNext(1);
                 // 仅发送Complete事件
                 emitter.onComplete();
             }
         }).defaultIfEmpty(10)
-                .subscribe(new Observer<Integer>() {
+                .subscribe(new Consumer<Integer>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "开始采用subscribe连接");
-                    }
-
-                    @Override
-                    public void onNext(Integer integer) {
-                        Log.d(TAG, "接收到了事件" + integer);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "对Error事件作出响应");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "对Complete事件作出响应");
+                    public void accept(Integer integer) throws Exception {
+                        KLog.d(TAG, "接收事件：" + integer);
                     }
                 });
     }
