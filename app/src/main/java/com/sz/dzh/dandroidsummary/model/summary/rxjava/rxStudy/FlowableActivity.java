@@ -196,5 +196,6 @@ public class FlowableActivity extends BaseActivity {
      * 对于非自身手动创建的Flowable，可以用 onBackpressureXXX()方法
      *  Flowable.interval(1, TimeUnit.MILLISECONDS).onBackpressureBuffer()
      *
+     *  也可以使用toFlowable(BackpressureStrategy.XXX) 操作符 添加背压模式
      * **/
 }

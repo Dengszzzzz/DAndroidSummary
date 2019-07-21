@@ -1,27 +1,28 @@
-package com.sz.dzh.dandroidsummary.model.summary.rxjava;
+package com.sz.dzh.dandroidsummary.model.summary.rxjava.rxUse;
 
 import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
-import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.RxJStudyListActivity;
-import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxUse.RxUseListActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.FlowableActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.RxCombineActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.RxConditionActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.RxCreateActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.RxFilterActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.RxFunctionActivity;
+import com.sz.dzh.dandroidsummary.model.summary.rxjava.rxStudy.RxTransformActivity;
 
 /**
  * Created by administrator on 2018/11/5.
- * 1.RxJava是什么，它优势是什么？
- * 2.RxJava2基础知识。
- * 3.RxJava2操作符。
- * 4.背压策略。
- * 5.具体的使用场景。
+ * RxJava2 实际应用场景
+ * 1.RxBus 替换 EventBus
  */
-public class RxJavaListActivity extends BaseListShowActivity {
+public class RxUseListActivity extends BaseListShowActivity {
     @Override
     protected void initUI() {
-        tvTitle.setText("RxJava2学习笔记");
+        tvTitle.setText("RxJava2 实际应用场景");
     }
 
     @Override
     protected void initData() {
-        addClazzBean("RxJava2 基础知识", RxJStudyListActivity.class);
-        addClazzBean("RxJava2 实际应用场景", RxUseListActivity.class);
+        addClazzBean("RxBus使用", RxBusActvitiy.class);
     }
 
 

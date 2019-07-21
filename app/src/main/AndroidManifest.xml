@@ -267,6 +267,9 @@
         <activity android:name=".model.summary.rxjava.rxStudy.RxFunctionActivity" />
         <activity android:name=".model.summary.rxjava.rxStudy.RxConditionActivity" />
         <activity android:name=".model.summary.rxjava.rxStudy.FlowableActivity" />
+        <activity android:name=".model.summary.rxjava.rxUse.RxUseListActivity" />
+        <activity android:name=".model.summary.rxjava.rxUse.RxBusBActvitiy" />
+        <activity android:name=".model.summary.rxjava.rxUse.RxBusActvitiy" />
 
 
     </application>

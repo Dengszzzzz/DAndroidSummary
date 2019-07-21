@@ -173,9 +173,4 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenterIm
     public void handleFailResponse(NetBean netBean) {
 
     }
-
-
-
-
-
 }

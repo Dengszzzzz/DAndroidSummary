@@ -51,4 +51,14 @@ public class OrderBean {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        return "OrderBean{" +
+                "id=" + id +
+                ", customName='" + customName + '\'' +
+                ", orderPrice=" + orderPrice +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

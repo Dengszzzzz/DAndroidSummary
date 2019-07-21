@@ -42,6 +42,12 @@ public class NetBean {
         this.sessionId = sessionId;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "NetBean{" +
+                "respCode='" + respCode + '\'' +
+                ", respMsg='" + respMsg + '\'' +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
+    }
 }
