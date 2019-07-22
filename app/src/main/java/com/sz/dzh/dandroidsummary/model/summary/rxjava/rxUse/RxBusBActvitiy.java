@@ -32,13 +32,6 @@ public class RxBusBActvitiy extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_send)
-    public void onViewClicked() {
-        //发送事件
-
-        ToastUtils.showToast("已发送RxBus事件，请返回看结果");
-        finish();
-    }
 
     @OnClick({R.id.btn_send, R.id.btn_send2, R.id.btn_send3})
     public void onViewClicked(View view) {
