@@ -75,8 +75,10 @@ public class RxBus {
      *    只有当 Subject 调用 onComplete 方法时，才会将 Subject 中的最后一个事件传递给所有的 Observer。
      *
      * 2.BehaviorSubject
-     *    该类有创建时需要一个默认参数，该默认参数会在 Subject 未发送过其他的事件时，向注册的 Observer 发送；
-     *    新注册的 Observer 不会收到之前发送的事件，这点和 PublishSubject 一致。
+     *    当观察者订阅BehaviorSubject时，它开始发射原始Observable最近发射的数据（如果此时还没有收到任何数据，
+     *    它会发射一个默认值），然后继续发射其它任何来自原始Observable的数据。然而，如果原始的Observable因为
+     *    发生了一个错误而终止，BehaviorSubject将不会发射任何数据，只是简单的向前传递这个错误通知。
+     *    Rxlifecycle2（RxJava绑定声明周期的库）中用到。
      *
      * 3.PublishSubject
      *    不会改变事件的发送顺序；在已经发送了一部分事件之后注册的 Observer 不会收到之前发送的事件。
@@ -88,9 +90,9 @@ public class RxBus {
      *   只允许一个 Observer 进行监听，在该 Observer 注册之前会将发射的所有的事件放进一个队列中，
      *   并在 Observer 注册的时候一起通知给它。
      * */
+
     /**
-     * 看了上面的注释可知，正常订阅可用BehaviorSubject、PublishSubject、黏性事件可用ReplaySubject。
-     * 此处用PublishSubject
+     * 正常订阅可用PublishSubject、黏性事件可用ReplaySubject。
      */
     private RxBus(){
         mSubject = PublishSubject.create().toSerialized();

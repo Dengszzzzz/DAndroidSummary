@@ -270,6 +270,8 @@
         <activity android:name=".model.summary.rxjava.rxUse.RxUseListActivity" />
         <activity android:name=".model.summary.rxjava.rxUse.RxBusBActvitiy" />
         <activity android:name=".model.summary.rxjava.rxUse.RxBusActvitiy" />
+        <activity android:name=".model.summary.rxjava.rxUse.RxCodeActvitiy" />
+        <activity android:name=".model.summary.rxjava.rxUse.RxLifecycleActivity" />
 
 
     </application>

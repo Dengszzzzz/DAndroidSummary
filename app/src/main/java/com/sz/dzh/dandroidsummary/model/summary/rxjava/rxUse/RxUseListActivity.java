@@ -23,6 +23,8 @@ public class RxUseListActivity extends BaseListShowActivity {
     @Override
     protected void initData() {
         addClazzBean("RxBus使用", RxBusActvitiy.class);
+        addClazzBean("验证码倒计时", RxCodeActvitiy.class);
+        addClazzBean("RxLifecycle使用", RxLifecycleActivity.class);
     }
 
 
