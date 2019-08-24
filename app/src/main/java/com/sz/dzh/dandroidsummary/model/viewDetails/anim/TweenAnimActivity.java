@@ -6,8 +6,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

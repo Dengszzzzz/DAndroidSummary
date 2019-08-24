@@ -1,19 +1,17 @@
 package com.sz.dzh.dandroidsummary.model.viewDetails.anim;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.utils.glideUtils.GlideUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 共享元素做转场动画B

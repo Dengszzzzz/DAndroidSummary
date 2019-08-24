@@ -6,9 +6,9 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

@@ -11,17 +11,16 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.sz.dengzh.commonlib.base.BaseFragment;
+import com.sz.dengzh.commonlib.base.BaseListAdapter;
+import com.sz.dengzh.commonlib.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
-import com.sz.dzh.dandroidsummary.base.BaseFragment;
-import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.viewDetails.anim.AnimListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.customview.CustomListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.DialogListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.imageView.ImageViewListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.popwindow.PopWindowListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.ViewPagerListActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabPagerActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.webview.WebListActivity;
 
 import java.util.ArrayList;

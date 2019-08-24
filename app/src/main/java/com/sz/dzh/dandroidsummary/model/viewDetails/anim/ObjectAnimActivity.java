@@ -7,8 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.widget.anim.PointAnimView;
 
 import butterknife.BindView;

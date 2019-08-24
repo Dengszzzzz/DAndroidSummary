@@ -1,10 +1,8 @@
 package com.sz.dzh.dandroidsummary.model.summary.netSummary;
 
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 import com.sz.dzh.dandroidsummary.model.summary.netSummary.okhttp.OkHttpActivity;
 import com.sz.dzh.dandroidsummary.model.summary.netSummary.retrofit.RetrofitActivity;
-import com.sz.dzh.dandroidsummary.model.summary.service.ServiceTestActivity;
-import com.sz.dzh.dandroidsummary.model.summary.service.keeplive.KeepServiceActivity;
 
 /**
  * Created by dengzh on 2018/4/18.

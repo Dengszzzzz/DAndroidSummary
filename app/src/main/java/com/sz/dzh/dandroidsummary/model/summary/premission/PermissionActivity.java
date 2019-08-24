@@ -9,9 +9,9 @@ import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 
 import com.socks.library.KLog;
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class PermissionActivity extends BaseActivity {
      * 3）APP弹出系统的授权提示框，让用户授权（用户可授权、也可取消、也可选择不再提醒）
      * 4）在Activity的onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)方法中，
      * 返回用户授权的信息（请求码，请求的权限集合、每个权限授权的情况集合）
-     * a) 如果已都已授权，可以继续操作，也可以是什么也不做，等待用户重新操作；
+     * ) 如果已都已授权，可以继续操作，也可以是什么也不做，等待用户重新操作；
      * b) 如果未授权，引导用户去授权；
      */
 

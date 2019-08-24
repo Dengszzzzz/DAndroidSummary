@@ -1,7 +1,7 @@
 package com.sz.dzh.dandroidsummary.model.viewDetails.anim;
 
 
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 
 /**
  * Created by administrator on 2018/8/16.

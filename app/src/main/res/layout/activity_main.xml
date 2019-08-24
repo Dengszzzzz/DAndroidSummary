@@ -70,7 +70,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
-        android:src="@mipmap/scan_tab" />
+        android:src="@drawable/scan_tab" />
 
 
 </RelativeLayout>

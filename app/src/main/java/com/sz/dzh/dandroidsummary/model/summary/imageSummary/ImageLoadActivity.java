@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +44,7 @@ public class ImageLoadActivity extends BaseActivity {
     private void test() {
         String mFilePath = "";
         //加载资源
-        BitmapFactory.decodeResource(getResources(), R.mipmap.follow_anim0);
+        BitmapFactory.decodeResource(getResources(), R.drawable.follow_anim0);
         //加载本地图片
         BitmapFactory.decodeFile(mFilePath);
     }

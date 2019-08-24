@@ -6,9 +6,9 @@ import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.view.View;
 
 import com.socks.library.KLog;
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 import com.sz.dzh.dandroidsummary.utils.cryptoUtils.CryptoObjectHelper;
 
 import javax.crypto.Cipher;

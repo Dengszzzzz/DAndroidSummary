@@ -7,8 +7,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.widget.webview.MyWebView;
 
 import butterknife.BindView;

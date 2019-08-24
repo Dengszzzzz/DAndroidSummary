@@ -1,13 +1,11 @@
 package com.sz.dzh.dandroidsummary.model.specialFunc.download;
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -15,8 +13,8 @@ import android.support.annotation.Nullable;
 import android.widget.RemoteViews;
 
 import com.socks.library.KLog;
+import com.sz.dengzh.commonlib.CommonConfig;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.App;
 import com.sz.dzh.dandroidsummary.bean.EventBean;
 import com.sz.dzh.dandroidsummary.utils.Constant;
 
@@ -50,7 +48,7 @@ public class DownloadIntentService extends IntentService {
 
     public DownloadIntentService() {
         super("DownloadService");
-        DOWNLOAD_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + App.ctx.getPackageName() + "/download/";
+        DOWNLOAD_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + CommonConfig.ctx.getPackageName() + "/download/";
     }
 
     @Override

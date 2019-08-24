@@ -1,7 +1,7 @@
 package com.sz.dzh.dandroidsummary.model.viewDetails.customview;
 
 
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.imageView.NiceImageActivity;
 
 /**

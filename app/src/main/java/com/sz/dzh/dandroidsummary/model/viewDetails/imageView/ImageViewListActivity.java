@@ -1,10 +1,7 @@
 package com.sz.dzh.dandroidsummary.model.viewDetails.imageView;
 
 
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.customview.InflaterActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.customview.MyViewActivity;
-import com.sz.dzh.dandroidsummary.model.viewDetails.customview.VerticalStepViewActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 
 /**
  * Created by dengzh on 2018/4/18.

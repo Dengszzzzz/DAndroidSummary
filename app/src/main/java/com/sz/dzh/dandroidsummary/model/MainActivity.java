@@ -10,14 +10,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.fragment.ProblemsFragment;
 import com.sz.dzh.dandroidsummary.fragment.SpecialFuncFragment;
 import com.sz.dzh.dandroidsummary.fragment.SummaryFragment;
 import com.sz.dzh.dandroidsummary.fragment.ViewDetailsFragment;
-import com.sz.dzh.dandroidsummary.utils.AppManager;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.AppManager;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mIvCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showToast("O(∩_∩)O123456782229~");
+                ToastUtils.showToast("O(∩_∩)O暂未开放~");
             }
         });
     }

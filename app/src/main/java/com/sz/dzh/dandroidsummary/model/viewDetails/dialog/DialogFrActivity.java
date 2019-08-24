@@ -1,30 +1,17 @@
 package com.sz.dzh.dandroidsummary.model.viewDetails.dialog;
 
 import android.app.FragmentManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.socks.library.KLog;
-import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.dialogFragment.CustomDialogFragment;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.dialogFragment.SelectPhotoDialogFragment;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.dialogFragment.SelectPhotoDialogFragment2;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.dialogFragment.TestDialogFragment;
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.dialogFragment.TestDialogFragment2;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 import com.sz.dzh.dandroidsummary.widget.dialog.IDialogSelect;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by dengzh on 2018/4/19.

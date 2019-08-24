@@ -6,8 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.widget.stepView.VerticalStepView;
 
 import java.util.ArrayList;

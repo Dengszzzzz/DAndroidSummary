@@ -11,18 +11,17 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.sz.dengzh.commonlib.base.BaseFragment;
+import com.sz.dengzh.commonlib.base.BaseListAdapter;
+import com.sz.dengzh.commonlib.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
-import com.sz.dzh.dandroidsummary.base.BaseFragment;
-import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.summary.activity.AcListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.imageSummary.ImageListActivity;
-import com.sz.dzh.dandroidsummary.model.summary.netSummary.NetActivity;
 import com.sz.dzh.dandroidsummary.model.summary.netSummary.NetListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.premission.PermissionActivity;
-import com.sz.dzh.dandroidsummary.model.summary.rxjava.RxJavaListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.service.ServiceListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.storageSummary.StorageActivity;
+import com.xiaojinzi.component.impl.Router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class SummaryFragment extends BaseFragment{
+public class SummaryFragment extends BaseFragment {
 
     protected List<ClazzBean> mList = new ArrayList<>();
     protected BaseListAdapter mAdapter;
@@ -66,15 +65,18 @@ public class SummaryFragment extends BaseFragment{
         mList.add(new ClazzBean("网络知识",NetListActivity.class));
         mList.add(new ClazzBean("权限管理", PermissionActivity.class));
         mList.add(new ClazzBean("图片知识详解", ImageListActivity.class));
-        mList.add(new ClazzBean("RxJava2学习笔记", RxJavaListActivity.class));
-
-
+        mList.add(new ClazzBean("RxJava2学习笔记","RxJavaSummary/Main"));
 
         mAdapter = new BaseListAdapter(mList);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(mList.get(position).getClazz());
+                if(mList.get(position).getClazz()!=null){
+                    startActivity(mList.get(position).getClazz());
+                }else{
+                    //路由跳转
+                    Router.with(mActivity).hostAndPath(mList.get(position).getHostAndPath()).navigate();
+                }
             }
         });
         mRecyclerView.setHasFixedSize(true);

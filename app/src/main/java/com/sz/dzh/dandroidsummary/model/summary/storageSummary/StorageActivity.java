@@ -9,9 +9,9 @@ import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.socks.library.KLog;
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;

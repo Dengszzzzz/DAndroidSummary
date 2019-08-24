@@ -11,7 +11,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/train_pre"/>
+        android:src="@drawable/train_pre"/>
 
     <TextView
         android:id="@+id/typeNameTv"

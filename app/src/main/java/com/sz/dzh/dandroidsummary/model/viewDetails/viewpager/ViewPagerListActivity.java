@@ -1,6 +1,6 @@
 package com.sz.dzh.dandroidsummary.model.viewDetails.viewpager;
 
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.banpager.BanPagerActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabIndicatorActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.tabpager.TabPagerActivity;

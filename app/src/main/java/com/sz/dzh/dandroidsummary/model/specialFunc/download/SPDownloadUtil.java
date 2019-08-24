@@ -3,7 +3,7 @@ package com.sz.dzh.dandroidsummary.model.specialFunc.download;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.sz.dzh.dandroidsummary.base.App;
+import com.sz.dengzh.commonlib.CommonConfig;
 
 /**
  * 记录下载位置的sp工具类
@@ -21,7 +21,7 @@ public class SPDownloadUtil {
             synchronized (SPDownloadUtil.class) {
                 if (mSharedPreferences == null || instance == null) {
                     instance = new SPDownloadUtil();
-                    mSharedPreferences = App.ctx.getSharedPreferences(App.ctx.getPackageName() + ".downloadSp", Context.MODE_PRIVATE);
+                    mSharedPreferences = CommonConfig.ctx.getSharedPreferences(CommonConfig.ctx.getPackageName() + ".downloadSp", Context.MODE_PRIVATE);
                 }
             }
         }

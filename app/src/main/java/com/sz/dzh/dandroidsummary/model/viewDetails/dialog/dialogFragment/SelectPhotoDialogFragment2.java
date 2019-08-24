@@ -11,23 +11,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.socks.library.KLog;
+import com.sz.dengzh.commonlib.CommonConfig;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.App;
 import com.sz.dzh.dandroidsummary.utils.AppUtils;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 import com.sz.dzh.dandroidsummary.utils.imageUtils.BitmapUtils;
 
 import java.io.File;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -113,7 +106,7 @@ public class SelectPhotoDialogFragment2 extends BaseDialogFragment implements Vi
         if (AppUtils.hasSdcard()) {
             //1.创建图片文件夹
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    File.separator + App.ctx.getPackageName() +  File.separator + "DASImage";
+                    File.separator + CommonConfig.ctx.getPackageName() +  File.separator + "DASImage";
             imagePath = path +  File.separator + BitmapUtils.getFileName() + ".jpg";
             //创建目录
             File dirFile = new File(path);

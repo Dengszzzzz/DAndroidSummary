@@ -3,67 +3,67 @@
     android:oneshot="true">
 
     <item
-        android:drawable="@mipmap/follow_anim0"
+        android:drawable="@drawable/follow_anim0"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim1"
+        android:drawable="@drawable/follow_anim1"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim2"
+        android:drawable="@drawable/follow_anim2"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim3"
+        android:drawable="@drawable/follow_anim3"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim4"
+        android:drawable="@drawable/follow_anim4"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim5"
+        android:drawable="@drawable/follow_anim5"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim6"
+        android:drawable="@drawable/follow_anim6"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim7"
+        android:drawable="@drawable/follow_anim7"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim8"
+        android:drawable="@drawable/follow_anim8"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim9"
+        android:drawable="@drawable/follow_anim9"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim10"
+        android:drawable="@drawable/follow_anim10"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim11"
+        android:drawable="@drawable/follow_anim11"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim12"
+        android:drawable="@drawable/follow_anim12"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim13"
+        android:drawable="@drawable/follow_anim13"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim14"
+        android:drawable="@drawable/follow_anim14"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim15"
+        android:drawable="@drawable/follow_anim15"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim16"
+        android:drawable="@drawable/follow_anim16"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim17"
+        android:drawable="@drawable/follow_anim17"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim18"
+        android:drawable="@drawable/follow_anim18"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim19"
+        android:drawable="@drawable/follow_anim19"
         android:duration="50" />
     <item
-        android:drawable="@mipmap/follow_anim20"
+        android:drawable="@drawable/follow_anim20"
         android:duration="50" />
 
 </animation-list>

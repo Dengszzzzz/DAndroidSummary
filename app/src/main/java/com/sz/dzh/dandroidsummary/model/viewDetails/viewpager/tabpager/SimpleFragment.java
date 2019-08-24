@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sz.dengzh.commonlib.base.BaseFragment;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

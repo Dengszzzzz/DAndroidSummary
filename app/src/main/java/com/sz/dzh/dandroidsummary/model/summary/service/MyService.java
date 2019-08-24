@@ -122,7 +122,7 @@ public class MyService extends Service {
         Notification.Builder builder = new Notification.Builder(this)
                 .setContentTitle("DAS测试服务")
                 .setContentText("通知内容")
-                .setSmallIcon(R.mipmap.hide_pwd_icon)
+                .setSmallIcon(R.drawable.hide_pwd_icon)
                 .setContentIntent(pendingIntent);  //设置点击通知后的操作
         //5.在8.0系统以上，设置ChannelId
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){

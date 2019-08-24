@@ -10,12 +10,10 @@ import android.support.v4.content.FileProvider;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 import com.sz.dzh.dandroidsummary.bean.EventBean;
-import com.sz.dzh.dandroidsummary.model.summary.service.ServiceTestActivity;
-import com.sz.dzh.dandroidsummary.model.summary.service.keeplive.KeepServiceActivity;
 import com.sz.dzh.dandroidsummary.utils.Constant;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

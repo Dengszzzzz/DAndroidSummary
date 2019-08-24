@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.utils.AppUtils;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

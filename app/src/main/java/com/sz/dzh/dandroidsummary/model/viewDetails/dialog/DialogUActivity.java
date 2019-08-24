@@ -3,8 +3,8 @@ package com.sz.dzh.dandroidsummary.model.viewDetails.dialog;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
-import com.sz.dzh.dandroidsummary.utils.ToastUtils;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
+import com.sz.dengzh.commonlib.utils.ToastUtils;
 import com.sz.dzh.dandroidsummary.widget.dialog.DialogUtils;
 import com.sz.dzh.dandroidsummary.widget.dialog.IDialogSelect;
 

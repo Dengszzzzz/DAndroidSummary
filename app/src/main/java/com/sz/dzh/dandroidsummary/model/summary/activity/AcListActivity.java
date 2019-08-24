@@ -1,8 +1,6 @@
 package com.sz.dzh.dandroidsummary.model.summary.activity;
 
-import com.sz.dzh.dandroidsummary.base.BaseListShowActivity;
-import com.sz.dzh.dandroidsummary.model.summary.service.ServiceTestActivity;
-import com.sz.dzh.dandroidsummary.model.summary.service.keeplive.KeepServiceActivity;
+import com.sz.dengzh.commonlib.base.BaseListShowActivity;
 
 public class AcListActivity extends BaseListShowActivity {
 

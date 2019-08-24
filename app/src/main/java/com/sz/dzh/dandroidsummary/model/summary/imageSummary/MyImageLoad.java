@@ -8,7 +8,7 @@ import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.socks.library.KLog;
-import com.sz.dzh.dandroidsummary.base.App;
+import com.sz.dengzh.commonlib.CommonConfig;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -119,9 +119,9 @@ public class MyImageLoad {
      */
     private static File getCacheDir(){
         if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
-            return App.ctx.getExternalCacheDir();
+            return CommonConfig.ctx.getExternalCacheDir();
         }
-        return App.ctx.getCacheDir();
+        return CommonConfig.ctx.getCacheDir();
     }
 
     /**

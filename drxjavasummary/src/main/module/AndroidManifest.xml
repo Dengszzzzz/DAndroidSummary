@@ -1,0 +1,28 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sz.dengzh.drxjavasummary" >
+
+    <!--
+       作为业务组件
+       1、Application 不要设置除theme以外的属性
+       2、没有launch 的 Activity。
+    -->
+
+    <application>
+        <activity android:name=".module.RxMainActivity" />
+        <activity android:name=".module.rxStudy.RxJStudyListActivity" />
+        <activity android:name=".module.rxStudy.FlowableActivity" />
+        <activity android:name=".module.rxStudy.RxCombineActivity" />
+        <activity android:name=".module.rxStudy.RxConditionActivity" />
+        <activity android:name=".module.rxStudy.RxCreateActivity" />
+        <activity android:name=".module.rxStudy.RxFilterActivity" />
+        <activity android:name=".module.rxStudy.RxFunctionActivity" />
+        <activity android:name=".module.rxStudy.RxTransformActivity" />
+        <activity android:name=".module.rxUse.RxBusActvitiy" />
+        <activity android:name=".module.rxUse.RxBusBActvitiy" />
+        <activity android:name=".module.rxUse.RxUseListActivity" />
+        <activity android:name=".module.rxUse.RxCodeActvitiy" />
+        <activity android:name=".module.rxUse.RxLifecycleActivity" />
+    </application>
+
+
+</manifest>

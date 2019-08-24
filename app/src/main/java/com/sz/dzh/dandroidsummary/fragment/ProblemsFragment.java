@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.sz.dengzh.commonlib.base.BaseFragment;
+import com.sz.dengzh.commonlib.base.BaseListAdapter;
+import com.sz.dengzh.commonlib.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.adapter.BaseListAdapter;
-import com.sz.dzh.dandroidsummary.base.BaseFragment;
-import com.sz.dzh.dandroidsummary.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.model.problems.EtAndSeekBarActivity;
 import com.sz.dzh.dandroidsummary.model.problems.ViewRotationActivity;
-import com.sz.dzh.dandroidsummary.model.specialFunc.download.DownloadListActivity;
-import com.sz.dzh.dandroidsummary.model.specialFunc.emoji_encoder.EmojiEncoderActivity;
-import com.sz.dzh.dandroidsummary.model.specialFunc.fingerprint.FingerPrintActivity;
 
 import java.util.ArrayList;
 import java.util.List;

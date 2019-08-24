@@ -8,11 +8,10 @@ import android.net.Uri;
 import android.os.Environment;
 
 import com.socks.library.KLog;
-import com.sz.dzh.dandroidsummary.base.App;
+import com.sz.dengzh.commonlib.CommonConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -184,9 +183,9 @@ public class BitmapUtils {
      */
     private static File getFilesDir(){
         if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
-            return App.ctx.getExternalFilesDir(null); //传null，访问的是files文件夹
+            return CommonConfig.ctx.getExternalFilesDir(null); //传null，访问的是files文件夹
         }
-        return App.ctx.getFilesDir();
+        return CommonConfig.ctx.getFilesDir();
     }
 
     /**
@@ -227,7 +226,7 @@ public class BitmapUtils {
         boolean isSuccess = false;
         if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    File.separator + App.ctx.getPackageName() +  File.separator + "DASImage";
+                    File.separator + CommonConfig.ctx.getPackageName() +  File.separator + "DASImage";
             File dirFile = new File(path);
             if (!dirFile.exists()) {
                 dirFile.mkdirs();
@@ -242,7 +241,7 @@ public class BitmapUtils {
 
                 //通知图库更新
                 Uri uri = Uri.fromFile(file);
-                App.ctx.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                CommonConfig.ctx.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
             }catch (IOException e) {
                 e.printStackTrace();
             }

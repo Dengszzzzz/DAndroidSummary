@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.base.BaseActivity;
 
 /**
  * 此篇文章只是个人学习笔记总结，详细内容可看大神的文章 https://blog.csdn.net/qq_38228254/article/details/79593153
@@ -28,7 +28,7 @@ import com.sz.dzh.dandroidsummary.base.BaseActivity;
  * 1）在listView中调用第三个种，会报错，此时返回的view是listView而不是itemView。
  *
  */
-public class InflaterActivity extends BaseActivity{
+public class InflaterActivity extends BaseActivity {
 
     private LayoutInflater mInflater;
 

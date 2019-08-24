@@ -5,7 +5,7 @@ import android.app.KeyguardManager;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
 
-import com.sz.dzh.dandroidsummary.base.App;
+import com.sz.dengzh.commonlib.CommonConfig;
 
 
 /**
@@ -18,13 +18,13 @@ public class FingerprintUtils {
 
 
     public static  void callFingerPrint(FingerprintManagerCompat.CryptoObject crypt, final OnCallBackListenr listener){
-        FingerprintManagerCompat managerCompat = FingerprintManagerCompat.from(App.ctx);
+        FingerprintManagerCompat managerCompat = FingerprintManagerCompat.from(CommonConfig.ctx);
         if (!managerCompat.isHardwareDetected()){ //判断设备是否支持
             if (listener != null)
                 listener.onSupportFailed();
             return;
         }
-        KeyguardManager keyguardManager =(KeyguardManager)App.ctx.getSystemService(App.ctx.KEYGUARD_SERVICE);
+        KeyguardManager keyguardManager =(KeyguardManager)CommonConfig.ctx.getSystemService(CommonConfig.ctx.KEYGUARD_SERVICE);
         if (!keyguardManager.isKeyguardSecure()) {//判断设备是否处于安全保护中
             if (listener != null)
                 listener.onInsecurity();
