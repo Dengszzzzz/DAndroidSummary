@@ -43,7 +43,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     // 用来存储设备信息和异常信息
     private Map<String, String> infos = new HashMap<String, String>();
     // 用来显示Toast中的信息
-    private static String error = "程序错误导致奔溃，请查看日志";
+    private String error = "程序错误导致奔溃，请查看日志";
     private static final Map<String, String> regexMap = new HashMap<String, String>();
     // 用于格式化日期,作为日志文件名的一部分
     private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss",
@@ -131,7 +131,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      *
      * @param ctx
      */
-    public void collectDeviceInfo(Context ctx) {
+    private void collectDeviceInfo(Context ctx) {
         try {
             PackageManager pm = ctx.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(),
@@ -208,7 +208,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @param e
      * @return
      */
-    public static StringBuffer getTraceInfo(Throwable e) {
+    private StringBuffer getTraceInfo(Throwable e) {
         StringBuffer sb = new StringBuffer();
         Throwable ex = e.getCause() == null ? e : e.getCause();
         StackTraceElement[] stacks = ex.getStackTrace();
@@ -230,7 +230,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      *
      * @param e
      */
-    public static void setError(String e) {
+     private void setError(String e) {
         Pattern pattern;
         Matcher matcher;
         for (Entry<String, String> m : regexMap.entrySet()) {

@@ -31,7 +31,7 @@ import java.io.File;
 
 public class DownloadListActivity extends BaseListShowActivity {
 
-    private String downloadUrl = "http://admin123.pplussport.com/android/iPlus_V1.1.4.apk";
+    private String downloadUrl = "https://t.alipayobjects.com/L1/71/100/and/alipay_wap_main.apk";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -28,7 +28,7 @@ import com.sz.dengzh.commonlib.base.BaseListShowActivity;
  * <p>
  *
  * 4.传统动画和属性动画对比
- * 1）属性动画，真正移动了view的位置。传统动画没有。
+ * 1)属性动画，真正移动了view的位置。传统动画没有。
  * 2)属性动画，repeatCount设置为无限循环时，记得在onStop()将动画停止，否则内存泄漏
  * 3)属性动画不如xml实现的补间动画复用率高。
  */

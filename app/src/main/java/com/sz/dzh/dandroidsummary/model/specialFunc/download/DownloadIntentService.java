@@ -117,6 +117,7 @@ public class DownloadIntentService extends IntentService {
      * @param remoteViews
      */
     private void createNotification(RemoteViews remoteViews){
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         //1.创建通知通道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //参数：通道id、名字、优先级。
@@ -138,7 +139,6 @@ public class DownloadIntentService extends IntentService {
                 .setSmallIcon(R.mipmap.ic_launcher);
         //3.将Builder对象转变成普通的notification
         mNotification = builder.build();
-        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyManager.notify(downloadId, mNotification);
     }
 
