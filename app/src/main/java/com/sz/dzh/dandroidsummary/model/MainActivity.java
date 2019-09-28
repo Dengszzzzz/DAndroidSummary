@@ -1,6 +1,8 @@
 package com.sz.dzh.dandroidsummary.model;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.sz.dzh.dandroidsummary.fragment.SummaryFragment;
 import com.sz.dzh.dandroidsummary.fragment.ViewDetailsFragment;
 import com.sz.dengzh.commonlib.utils.AppManager;
 import com.sz.dengzh.commonlib.utils.ToastUtils;
+import com.xiaojinzi.component.impl.Router;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +61,17 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mIvCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showToast("O(∩_∩)O暂未开放~");
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        ToastUtils.showToast("啦啦啦");
+                        Looper.loop();
+                    }
+                }).start();
+                /*Router.with(MainActivity.this).hostAndPath("JavaSummary/Main").navigate();
+                ToastUtils.showToast("O(∩_∩)O");*/
             }
         });
     }

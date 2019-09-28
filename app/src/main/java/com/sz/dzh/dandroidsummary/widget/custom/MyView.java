@@ -23,8 +23,9 @@ import com.sz.dzh.dandroidsummary.R;
  *      其中UNSPECIFIED一般不处理；AT_MOST就是Wrap_content；EXACTLY就是确切的值或者MATCH_PARENT；
  *      最后记得调用setMeasuredDimension(width,size);设置宽高
  * 3)onSizeChanged()：会得到最终的宽高，当view的size有变化时会调用。
- * 4)onDraw():注意不要在此方法创建新对象，例如Paint不要放在里面new出来，onDraw()需要知道Paint,Canvas。
- *            Invalidate()调用onDraw()不清空画布，上一次的path还会保留，可以用Path.reset()重置。
+ * 4)onDraw():注意不要在此方法创建新对象，例如Paint不要放在里面new出来，onDraw()需要知道Paint,Canvas,Path知识。
+ *            Invalidate()和postInvalidate()，都会调用onDraw()重绘。
+ *            如果在这个方法里用了path，记得用path.reset()重置一下。
  * 5)TypeArray获取attrs.xml定义的属性。
  */
 

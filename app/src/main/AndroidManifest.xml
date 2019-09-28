@@ -247,6 +247,10 @@
         <activity android:name=".model.problems.ViewRotationActivity" />
         <activity android:name=".model.viewDetails.imageView.NiceImageActivity" />
         <activity android:name=".model.viewDetails.imageView.ImageViewListActivity" />
+        <activity android:name=".model.summary.handler.HandlerActivity" />
+        <activity android:name=".model.specialFunc.camera.CameraActivity" />
+        <activity android:name=".model.specialFunc.crop.CameraActivity2" />
+        <activity android:name=".model.specialFunc.crop.CropActivity2" />
 
     </application>
 

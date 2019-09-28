@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
  * 具体可看 FileUtils，涉及sd卡和File，以及io流知识
  * 3.sqlite
  * 数据库创建，删除，数据插入删除查询，SqliteOpenHelper 和 SqliteDataBase 配合使用，明白如何做数据迁移。
- * 4.contentProvider
+ * 4.isNeedJavaModulevider
  * 1）在整个Android系统中扮演了数据管理的角色，负责整个Android系统中App数据的访问和各App之间的数据共享。
  * 2）内置应用对外共享数据，比如通讯录，日历，短信等，一般第三方app不对外共享数据。
  * 5.网络存储

@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sz.dengzh.javasummary" >
+
+    <!--
+       作为业务组件
+       1、Application 不要设置除theme以外的属性
+       2、没有launch 的 Activity。
+    -->
+
+    <application>
+        <activity android:name=".module.MainActivity" />
+        <activity android:name=".module.TestActivity" />
+    </application>
+
+
+</manifest>

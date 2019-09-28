@@ -1,1 +1,1 @@
-include ':app', ':commonlib', ':drxjavasummary'
+include ':app', ':commonlib', ':drxjavasummary', ':javasummary'

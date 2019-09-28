@@ -4,17 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sz.dengzh.commonlib.CommonConfig;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.utils.AppUtils;
 import com.sz.dengzh.commonlib.utils.ToastUtils;
+import com.sz.dzh.dandroidsummary.utils.imageUtils.BitmapUtils;
+
+import java.io.File;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +30,8 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by dengzh on 2018/5/7.
+ *
+ * 有问题，待修改
  */
 
 public class SelectPhotoDialogFragment extends BaseDialogFragment {
@@ -32,21 +40,20 @@ public class SelectPhotoDialogFragment extends BaseDialogFragment {
     public static final int PHOTO_REQUEST_GALLERY = 2;   // 从相册中选择
     private static final int CROP_SMALL_PICTURE = 10;    // 剪切图片
 
-    private static String IMAGE_FILE_LOCATION; // "file:///sdcard/temp.jpg";  //temp file
-    private Uri imageUri;   //Uri.parse(IMAGE_FILE_LOCATION); ;//The Uri to store the big bitmap
-    private int tag;   //传1的意义是，不吊起切图
+    private Uri imageUri;
+    private int isCrop;    //传1的意义是，不吊起切图
 
 
     Unbinder unbinder;
 
     /**
-     * @param tag  0-剪切图片  1-不剪切图片
+     * @param isCrop  0-剪切图片  1-不剪切图片
      * @return
      */
-    public static SelectPhotoDialogFragment newInstance(int tag){
+    public static SelectPhotoDialogFragment newInstance(int isCrop){
         SelectPhotoDialogFragment fragment = new SelectPhotoDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("tag",tag);
+        bundle.putInt("isCrop",isCrop);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -54,7 +61,7 @@ public class SelectPhotoDialogFragment extends BaseDialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        tag = getArguments().getInt("tag");
+        isCrop = getArguments().getInt("isCrop");
     }
 
     @Override
@@ -68,14 +75,9 @@ public class SelectPhotoDialogFragment extends BaseDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mContainerView = inflater.inflate(R.layout.dialog_select_photo2, null);
         unbinder = ButterKnife.bind(this, mContainerView);
-        init();
         return mContainerView;
     }
 
-    private void init(){
-        IMAGE_FILE_LOCATION = "file://" + Environment.getExternalStorageDirectory().getPath() + "/"+ System.currentTimeMillis()+".png";
-        imageUri = Uri.parse(IMAGE_FILE_LOCATION);
-    }
 
     @Override
     public void onDestroyView() {
@@ -102,13 +104,26 @@ public class SelectPhotoDialogFragment extends BaseDialogFragment {
      * 点击拍照
      */
     private void headCamera() {
-        if (AppUtils.hasSdcard()) {
-            Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            it.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(it, PHOTO_REQUEST_TAKEPHOTO);
-        } else {
-            ToastUtils.showToast("SdCard不存在，不允许拍照");
+        // 1、创建存储照片的文件
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                File.separator + CommonConfig.ctx.getPackageName() +  File.separator + "DASImage";
+        File dirFile = new File(path);
+        if (!dirFile.exists()) {
+            dirFile.mkdirs();
         }
+        File file = new File(path, BitmapUtils.getFileName() + ".jpg");
+
+        //2、获取文件Uri，注意Android 7.0及以上获取文件
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            imageUri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileProvider", file);
+        }else{
+            imageUri = Uri.fromFile(file);
+        }
+
+        //3.调取系统相机拍照
+        Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        it.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(it, PHOTO_REQUEST_TAKEPHOTO);
     }
 
     /**
@@ -128,7 +143,7 @@ public class SelectPhotoDialogFragment extends BaseDialogFragment {
         if (resultCode == RESULT_OK) {
             switch (requestCode){
                 case PHOTO_REQUEST_TAKEPHOTO:  //拍照
-                    if(tag == 1){
+                    if(isCrop == 1){
                         if (imageUri != null&&mDialogSelect!=null) {
                             mDialogSelect.onSelected(1,imageUri.toString());
                             dismiss();
@@ -139,7 +154,7 @@ public class SelectPhotoDialogFragment extends BaseDialogFragment {
                     break;
                 case PHOTO_REQUEST_GALLERY:  //画库选择图片
                     if (data != null) {
-                        if(tag == 1){
+                        if(isCrop == 1){
                             if (imageUri != null&&mDialogSelect!=null) {
                                 mDialogSelect.onSelected(2,data.getData().toString());
                                 dismiss();

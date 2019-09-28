@@ -16,6 +16,7 @@ import com.sz.dengzh.commonlib.base.BaseListAdapter;
 import com.sz.dengzh.commonlib.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.model.summary.activity.AcListActivity;
+import com.sz.dzh.dandroidsummary.model.summary.handler.HandlerActivity;
 import com.sz.dzh.dandroidsummary.model.summary.imageSummary.ImageListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.netSummary.NetListActivity;
 import com.sz.dzh.dandroidsummary.model.summary.premission.PermissionActivity;
@@ -66,6 +67,8 @@ public class SummaryFragment extends BaseFragment {
         mList.add(new ClazzBean("权限管理", PermissionActivity.class));
         mList.add(new ClazzBean("图片知识详解", ImageListActivity.class));
         mList.add(new ClazzBean("RxJava2学习笔记","RxJavaSummary/Main"));
+        mList.add(new ClazzBean("Handler知识", HandlerActivity.class));
+
 
         mAdapter = new BaseListAdapter(mList);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

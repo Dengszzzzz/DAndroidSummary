@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,7 @@ public class NetActivity extends BaseActivity {
     @BindView(R.id.tv_desc)
     TextView mTvDesc;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,8 @@ public class NetActivity extends BaseActivity {
         initTitle();
         tvTitle.setText("网络体系知识");
         webSocketSummary();
+
+
     }
 
     /**

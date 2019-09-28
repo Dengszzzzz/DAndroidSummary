@@ -9,11 +9,15 @@ import android.os.Environment;
 
 import com.socks.library.KLog;
 import com.sz.dengzh.commonlib.CommonConfig;
+import com.sz.dzh.dandroidsummary.App;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by Dengzh
@@ -181,7 +185,7 @@ public class BitmapUtils {
      * 文件目录
      * @return .../<application package>/files/
      */
-    private static File getFilesDir(){
+    public static File getFilesDir(){
         if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
             return CommonConfig.ctx.getExternalFilesDir(null); //传null，访问的是files文件夹
         }

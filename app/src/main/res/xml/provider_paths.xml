@@ -17,4 +17,17 @@ path="xxx"表示你要共享的文件夹
     <!--图片保存路径-->
     <external-path name="my_images" path="com.sz.dzh.dandroidsummary/DASImage/"/>
 
+    <root-path
+        name="camera_photos"
+        path="" />
+
+    <external-path
+        name="camera_photos"
+        path="/" />
+
+    <cache-path
+        name="picture_cache"
+        path="/picture_cache"
+        />
+
 </paths>

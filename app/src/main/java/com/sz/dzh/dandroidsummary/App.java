@@ -31,7 +31,7 @@ public class App extends Application {
         // 如果你依赖了 rx 版本,需要配置这句代码,否则删除这句
         // RxErrorIgnoreUtil.ignoreError();
         // 注册业务模块,注册的字符串是各个业务模块配置在 build.gradle 中的 HOST
-        ModuleManager.getInstance().registerArr("app","drxjava");
+        ModuleManager.getInstance().registerArr("app","drxjava","javaSummary");
         if (BuildConfig.DEBUG) {
             // 框架还带有检查重复的路由和重复的拦截器等功能,在 `debug` 的时候开启它
             ModuleManager.getInstance().check();
