@@ -20,6 +20,18 @@ import java.util.List;
 
 /**
  * Created by dengzh on 2019/9/10
+ * 1、比较排序，实现Comparable接口 或 Comparator接口
+ * 2、o1 和 o2的关系（或者说是this 和 o的关系），原序列里 o1 在 o2 之后。
+ * 3、返回 -1（<0的值），交换顺序。返回 0 或 1，不改变顺序。
+ * 4、底层，先确定局部顺序，再用二分查找法，进行后续排序。
+ *
+ *
+ * 参考
+ * [java comparator 升序、降序、倒序从源码角度理解]
+ * (https://blog.csdn.net/u013066244/article/details/78997869)
+ *
+ * [JAVA Comparator 接口排序用法]
+ * (https://www.cnblogs.com/shizhijie/p/7657049.html)
  */
 public class CompareActivity extends BaseActivity {
 
