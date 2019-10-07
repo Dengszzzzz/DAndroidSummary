@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:name=".RxJavaApp"
+        android:name=".JavaApp"
         android:icon="@mipmap/rx_ic_launcher"
         android:label="@string/rx_app_name"
         android:roundIcon="@mipmap/rx_ic_launcher_round"

@@ -10,6 +10,8 @@
     <application>
         <activity android:name=".module.MainActivity" />
         <activity android:name=".module.TestActivity" />
+        <activity android:name=".module.design_pattern.DesignPatternActivity" />
+        <activity android:name=".module.compare.CompareActivity" />
     </application>
 
 

@@ -16,8 +16,7 @@ import com.sz.dengzh.commonlib.base.BaseListAdapter;
 import com.sz.dengzh.commonlib.bean.ClazzBean;
 import com.sz.dzh.dandroidsummary.R;
 import com.sz.dzh.dandroidsummary.model.specialFunc.camera.CameraActivity;
-import com.sz.dzh.dandroidsummary.model.specialFunc.crop.CameraActivity2;
-import com.sz.dzh.dandroidsummary.model.specialFunc.crop.CropActivity2;
+import com.sz.dzh.dandroidsummary.model.specialFunc.crop.CropActivity;
 import com.sz.dzh.dandroidsummary.model.specialFunc.download.DownloadListActivity;
 import com.sz.dzh.dandroidsummary.model.specialFunc.emoji_encoder.EmojiEncoderActivity;
 import com.sz.dzh.dandroidsummary.model.specialFunc.fingerprint.FingerPrintActivity;
@@ -62,7 +61,7 @@ public class SpecialFuncFragment extends BaseFragment {
         mList.add(new ClazzBean("指纹识别",FingerPrintActivity.class));
         mList.add(new ClazzBean("Emoji表情编解码",EmojiEncoderActivity.class));
         mList.add(new ClazzBean("自定义相机", CameraActivity.class));
-        mList.add(new ClazzBean("自定义裁剪页面", CropActivity2.class));
+        mList.add(new ClazzBean("自定义裁剪页面", CropActivity.class));
 
 
         mAdapter = new BaseListAdapter(mList);

@@ -62,16 +62,16 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             @Override
             public void onClick(View view) {
 
-                new Thread(new Runnable() {
+                /*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Looper.prepare();
                         ToastUtils.showToast("啦啦啦");
                         Looper.loop();
                     }
-                }).start();
-                /*Router.with(MainActivity.this).hostAndPath("JavaSummary/Main").navigate();
-                ToastUtils.showToast("O(∩_∩)O");*/
+                }).start();*/
+                Router.with(MainActivity.this).hostAndPath("JavaSummary/Main").navigate();
+                ToastUtils.showToast("Java知识总结");
             }
         });
     }

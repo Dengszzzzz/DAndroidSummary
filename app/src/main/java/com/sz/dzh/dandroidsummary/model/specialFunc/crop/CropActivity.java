@@ -3,14 +3,19 @@ package com.sz.dzh.dandroidsummary.model.specialFunc.crop;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.isseiaoki.simplecropview.CropImageView;
+import com.isseiaoki.simplecropview.callback.CropCallback;
+import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -21,6 +26,7 @@ import com.socks.library.KLog;
 import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dengzh.commonlib.utils.ToastUtils;
 import com.sz.dzh.dandroidsummary.R;
+import com.sz.dzh.dandroidsummary.model.specialFunc.download.DownloadIntentService;
 import com.sz.dzh.dandroidsummary.utils.imageUtils.BitmapUtils;
 import com.sz.dzh.dandroidsummary.utils.imageUtils.ImageUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -31,25 +37,28 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by dengzh on 2019/9/28
+ * 裁剪2  使用SimpleCropView
  */
-public class CameraActivity2 extends BaseActivity {
+public class CropActivity extends BaseActivity {
 
     private final String TAG = getClass().getSimpleName();
 
-    @BindView(R.id.iv_show)
-    CropImageView ivShow;
     @BindView(R.id.ll_control)
     LinearLayout llControl;
     @BindView(R.id.needOffsetView)
     View needOffsetView;
+    @BindView(R.id.iv_show)
+    CropImageView ivShow;
 
-    private String path;    //原图路径
+    private String path;      //原图路径
     private String cutPath;   //剪切图路径
     private File compressFile;  //压缩后文件
+    private boolean isCropped;  //是否裁剪成功
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +91,7 @@ public class CameraActivity2 extends BaseActivity {
                     LocalMedia media = selectList.get(0);
                     // 1.media.getPath(); 为原图path
                     // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
-                    path = media.getPath(); //原图地址
+                    path = media.getPath();
                     if (TextUtils.isEmpty(path)) {
                         ToastUtils.showToast("相机拍照出错");
                         finish();
@@ -103,10 +112,7 @@ public class CameraActivity2 extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_submit:
-                Bitmap cropBitMap = ivShow.getCroppedImage();
-                ivShow.setImageBitmap(cropBitMap);
-
-
+                crop();
                /* if (compressFile != null) {
                     ToastUtils.showToast("图片上传成功");
                 } else {
@@ -116,9 +122,56 @@ public class CameraActivity2 extends BaseActivity {
         }
     }
 
-    private void compress(){
-        //进行图片压缩
-        ImageUtils.compress(this, path, new OnCompressListener() {
+    private void crop(){
+        //1.创建裁剪保存路径
+        File file = new File(ImageUtils.getCacheDir() + File.separator + "picture_cache",BitmapUtils.getFileName() + ".jpg");
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        cutPath = file.getPath();
+        Uri cutSaveUri;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            cutSaveUri = FileProvider.getUriForFile(this, getPackageName() + ".fileProvider", file);
+        }else{
+            cutSaveUri = Uri.fromFile(file);
+        }
+
+        //开始裁剪且保存
+        ivShow.startCrop(cutSaveUri, new CropCallback() {
+            @Override
+            public void onSuccess(Bitmap cropped) {
+                isCropped = true;
+                KLog.e(TAG,"裁剪成功");
+                ivShow.setImageBitmap(cropped);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                KLog.e(TAG,"裁剪失败");
+            }
+        }, new SaveCallback() {
+            @Override
+            public void onSuccess(Uri uri) {
+                KLog.e(TAG,"保存成功");
+                compress();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                KLog.e(TAG,"保存失败" + e.toString());
+                compress();
+            }
+        });
+    }
+
+    /**
+     * 压缩
+     */
+    private void compress() {
+        if(!isCropped){
+            return;
+        }
+        ImageUtils.compress(this, cutPath, new OnCompressListener() {
             @Override
             public void onStart() {
                 KLog.e(TAG, "压缩开始");
@@ -127,7 +180,7 @@ public class CameraActivity2 extends BaseActivity {
             @Override
             public void onSuccess(File file) {
                 KLog.e(TAG, "压缩成功，图片路径：" + file.getPath());
-                KLog.e(TAG, "压缩成功，图片大小：" + file.length()/1024 + "KB");
+                KLog.e(TAG, "压缩成功，图片大小：" + file.length() / 1024 + "KB");
                 compressFile = file;
             }
 
@@ -141,7 +194,7 @@ public class CameraActivity2 extends BaseActivity {
     @Override
     protected void onDestroy() {
         //删除压缩的缓存
-        PictureFileUtils.deleteCacheDirFile(this);
+        //PictureFileUtils.deleteCacheDirFile(this);
         ImageUtils.deleteCacheDirImgFile();
         super.onDestroy();
     }

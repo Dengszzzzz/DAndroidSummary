@@ -57,6 +57,7 @@ public class CameraActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_camera);
         ButterKnife.bind(this);
+        ToastUtils.showToast("这是个有BUG的自定义相机~");
         new RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .subscribe(granted -> {
                     if (granted) {
