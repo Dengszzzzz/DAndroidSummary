@@ -50,6 +50,7 @@ public class HandlerActivity extends BaseActivity {
         setContentView(R.layout.ac_handler);
         ButterKnife.bind(this);
 
+        String s = new String();
         myHandler = new MyHandler(this);
         //myHandler.sendEmptyMessageAtTime(1,2000);  //指定时间发送，开机2s发送
         myHandler.sendEmptyMessageDelayed(1,2000);  //延迟2s后发送

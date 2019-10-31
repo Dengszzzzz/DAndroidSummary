@@ -105,7 +105,7 @@ public class MyView extends View {
             case MeasureSpec.AT_MOST:    //如果测量模式是最大取值为size
                 mySize = defaultSize;    //可以自己决定大小，此处暂时取默认值
                 break;
-            case MeasureSpec.EXACTLY:  //如果是固定的大小（match_parent/确切值），那就不要去改变它
+                case MeasureSpec.EXACTLY:  //如果是固定的大小（match_parent/确切值），那就不要去改变它
                 mySize = size;
                 break;
         }

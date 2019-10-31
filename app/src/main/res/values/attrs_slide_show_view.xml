@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SlideShowView">
+
+        <!--滑动多大距离，才判定是展开 or 收起-->
+        <attr name="slide_effect_size" format="dimension"/>
+
+        <!--是否可以滑动显示-->
+        <attr name="enable_slide_show" format="boolean"/>
+
+    </declare-styleable>
+</resources>

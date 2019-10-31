@@ -251,6 +251,8 @@
         <activity android:name=".model.specialFunc.camera.CameraActivity" />
         <activity android:name=".model.specialFunc.crop.CropActivity2" />
         <activity android:name=".model.specialFunc.crop.CropActivity" />
+        <activity android:name=".model.viewDetails.recyclerView.XRVActivity" />
+        <activity android:name=".model.viewDetails.customview.DragShowActivity" />
 
     </application>
 

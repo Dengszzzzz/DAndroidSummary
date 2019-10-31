@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/titleBar"
+        layout="@layout/top_view"/>
+
+
+    <com.sz.dzh.dandroidsummary.widget.custom.SlideView
+        android:id="@+id/slideview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        app:bg_drawable="@drawable/slideview_bg_enable"
+        app:bg_text="背景文字"
+        app:bg_text_color="@color/white"
+        app:bg_text_complete="拖动完成的背景文字"
+        app:bg_text_enable_false="禁用时背景文字"
+        app:bg_text_size="18sp"
+        app:icon_drawable="@mipmap/ic_launcher"
+        app:icon_drawable_enable_false="@mipmap/btn_slide_handle_enable_false"
+        app:icon_ratio="0.15"
+        app:min_height="48dp"
+        app:secondary_color="@color/c_cccccc"
+        app:reset_not_full="true"
+        app:enable_when_full="false" />
+
+
+    <com.sz.dzh.dandroidsummary.widget.custom.SlideShowView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:background="@color/bg_blue"
+        app:slide_effect_size = "20dp">
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:background="@color/color_53">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="详情" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_drag"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/tv_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显示详情"
+                android:padding="10dp"
+                android:textSize="@dimen/text_size20"/>
+        </LinearLayout>
+
+    </com.sz.dzh.dandroidsummary.widget.custom.SlideShowView>
+
+
+
+
+</LinearLayout>
