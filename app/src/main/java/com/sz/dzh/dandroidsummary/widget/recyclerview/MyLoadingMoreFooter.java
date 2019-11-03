@@ -1,4 +1,4 @@
-package com.sz.dzh.dandroidsummary.model.viewDetails.recyclerView;
+package com.sz.dzh.dandroidsummary.widget.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -116,7 +116,7 @@ public class MyLoadingMoreFooter extends LinearLayout {
         }
     }
 
-    CustomFooterViewCallBack callBack = new CustomFooterViewCallBack() {
+    public CustomFooterViewCallBack callBack = new CustomFooterViewCallBack() {
         @Override
         public void onLoadingMore(View yourFooterView) {
             setState(STATE_LOADING);

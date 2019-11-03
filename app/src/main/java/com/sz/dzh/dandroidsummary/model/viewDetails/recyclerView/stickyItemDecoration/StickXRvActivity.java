@@ -1,4 +1,4 @@
-package com.sz.dzh.dandroidsummary.model.viewDetails.recyclerView;
+package com.sz.dzh.dandroidsummary.model.viewDetails.recyclerView.stickyItemDecoration;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,9 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.sz.dengzh.commonlib.base.BaseActivity;
 import com.sz.dzh.dandroidsummary.R;
-import com.sz.dzh.dandroidsummary.adapter.XrvAdapter;
-import com.sz.dzh.dandroidsummary.bean.RxOperatorBean;
 import com.sz.dzh.dandroidsummary.widget.recyclerview.MyLoadingMoreFooter;
+import com.sz.dzh.dandroidsummary.widget.recyclerview.sticky.MyStickyItemDecoration;
+import com.sz.dzh.dandroidsummary.widget.recyclerview.sticky.XRStickyItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +19,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by dengzh on 2019/10/21
+ * Created by dengzh on 2019/11/3
+ * 顶部吸附 RecyclerView
  */
-public class XRVActivity extends BaseActivity {
+public class StickXRvActivity extends BaseActivity{
 
     @BindView(R.id.xrv)
     XRecyclerView xrv;
 
-    private List<RxOperatorBean> list = new ArrayList<>();
-    private XrvAdapter adapter;
+    private List<Performer> list = new ArrayList<>();
+    private PerformerListAdapter adapter;
     private MyLoadingMoreFooter footer;
+
+    private XRStickyItemDecoration stickyItemDecoration;
+    private int titleIndex;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,8 +42,13 @@ public class XRVActivity extends BaseActivity {
         initTitle();
         tvTitle.setText("xRecyclerView");
 
-        adapter = new XrvAdapter(this,list);
+        adapter = new PerformerListAdapter(this,list);
         xrv.setLayoutManager(new LinearLayoutManager(this));
+        //添加ItemDecoration，作为吸附View
+        stickyItemDecoration = new XRStickyItemDecoration();
+      //  stickyItemDecoration.setHaveHeaderView(true);
+        xrv.addItemDecoration(stickyItemDecoration);
+
         xrv.setAdapter(adapter);
         xrv.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -55,6 +64,8 @@ public class XRVActivity extends BaseActivity {
         footer = new MyLoadingMoreFooter(this);
         xrv.setFootView(footer, footer.callBack);
         xrv.setNoMore(true);
+
+       // refresh();
     }
 
     private void refresh(){
@@ -62,15 +73,22 @@ public class XRVActivity extends BaseActivity {
             @Override
             public void run() {
                 list.clear();
+                stickyItemDecoration.clearPositionCache();
+
+                titleIndex = 0;
                 for (int i = 0;i<20;i++){
-                    list.add(new RxOperatorBean(i,"名称" + i,"描述" + i));
+                    if(i%5 == 0){
+                        titleIndex++;
+                        list.add(new Performer("分类标题" + titleIndex));
+                    }
+                    Performer bean = new Performer("名称" + i, 10);
+                    list.add(bean);
                 }
                 adapter.notifyDataSetChanged();
                 xrv.refreshComplete();
                 xrv.setLoadingMoreEnabled(true);
             }
         },1000);
-
     }
 
     private void loadMore(){
@@ -83,7 +101,12 @@ public class XRVActivity extends BaseActivity {
                     return;
                 }
                 for (int i = 0 ;i<10;i++){
-                    list.add(new RxOperatorBean((i+k),"名称" + (i+k),"描述" + (i+k)));
+                    if((i + k)%5 == 0){
+                        titleIndex++;
+                        list.add(new Performer("分类标题" + titleIndex));
+                    }
+                    Performer bean = new Performer("名称" + (i+k), 10);
+                    list.add(bean);
                 }
                 adapter.notifyDataSetChanged();
                 xrv.loadMoreComplete();

@@ -1,16 +1,15 @@
 package com.sz.dzh.dandroidsummary.widget.custom;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 
-import com.socks.library.KLog;
 import com.sz.dzh.dandroidsummary.R;
 
 /**
@@ -95,8 +94,6 @@ public class SlideShowView extends ViewGroup {
     private boolean mEnableSlideShow;
 
 
-
-
     public SlideShowView(Context context) {
         this(context,null);
     }
@@ -161,7 +158,7 @@ public class SlideShowView extends ViewGroup {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        KLog.e("onSizeChanged:新宽--" + w + "，新高--" + h);
+        Log.e(TAG,"onSizeChanged:新宽--" + w + "，新高--" + h);
         curHeight = h;
     }
 
@@ -170,7 +167,7 @@ public class SlideShowView extends ViewGroup {
      * 定位,其实是定子View 相对于父View 的位置信息。
      * 此处两个子View。
      * topView：顶部和 父View 保持一致，不收滑动影响。
-     * sView: 底部和 父View 保持一致，收滑动音响。
+     * sView: 底部和 父View 保持一致，收滑动影响。
      *
      * @param changed
      * @param l
@@ -194,8 +191,6 @@ public class SlideShowView extends ViewGroup {
     }
 
 
-
-
     /**
      * 触摸事件
      * @param event
@@ -209,7 +204,7 @@ public class SlideShowView extends ViewGroup {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 downY = (int) event.getY();
-                KLog.e("downY：" + downY);
+                Log.e(TAG,"downY：" + downY);
                 //记录按下时，整个父view的高
                 downHeight = curHeight;
                 break;
@@ -227,7 +222,7 @@ public class SlideShowView extends ViewGroup {
                     curHeight = downHeight - Math.abs(slide);
                     requestLayout();
                 }
-                KLog.e("slide：" + slide);
+                Log.e(TAG,"slide：" + slide);
                 break;
             case MotionEvent.ACTION_UP:
                 //滑动决策，滑动距离达到某个值，就进行展开 or 收起
@@ -242,7 +237,7 @@ public class SlideShowView extends ViewGroup {
                     targetHeight = downHeight;
                 }
                 showAnim();
-                KLog.e("最终高度：" + targetHeight);
+                Log.e(TAG,"最终高度：" + targetHeight);
                 //requestLayout();
                 break;
         }
@@ -250,7 +245,9 @@ public class SlideShowView extends ViewGroup {
     }
 
 
-
+    /**
+     * 属性动画，过渡最终展开收起效果
+     */
     private void showAnim(){
         ValueAnimator animator = ValueAnimator.ofInt(curHeight,targetHeight);
         animator.setDuration(300);
@@ -264,6 +261,5 @@ public class SlideShowView extends ViewGroup {
         animator.setInterpolator(new LinearInterpolator());
         animator.start();
     }
-
 
 }

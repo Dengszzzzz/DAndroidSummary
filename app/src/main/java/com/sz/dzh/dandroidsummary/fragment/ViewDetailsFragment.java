@@ -20,6 +20,7 @@ import com.sz.dzh.dandroidsummary.model.viewDetails.customview.CustomListActivit
 import com.sz.dzh.dandroidsummary.model.viewDetails.dialog.DialogListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.imageView.ImageViewListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.popwindow.PopWindowListActivity;
+import com.sz.dzh.dandroidsummary.model.viewDetails.recyclerView.RecyclerViewListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.recyclerView.XRVActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.viewpager.ViewPagerListActivity;
 import com.sz.dzh.dandroidsummary.model.viewDetails.webview.WebListActivity;
@@ -69,7 +70,7 @@ public class ViewDetailsFragment extends BaseFragment {
         mList.add(new ClazzBean("自定义View", CustomListActivity.class));
         mList.add(new ClazzBean("动画Anim", AnimListActivity.class));
         mList.add(new ClazzBean("ImageView", ImageViewListActivity.class));
-        mList.add(new ClazzBean("RecyclerView", XRVActivity.class));
+        mList.add(new ClazzBean("RecyclerView", RecyclerViewListActivity.class));
 
 
 

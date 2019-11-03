@@ -253,6 +253,9 @@
         <activity android:name=".model.specialFunc.crop.CropActivity" />
         <activity android:name=".model.viewDetails.recyclerView.XRVActivity" />
         <activity android:name=".model.viewDetails.customview.DragShowActivity" />
+        <activity android:name=".model.viewDetails.recyclerView.RecyclerViewListActivity" />
+        <activity android:name=".model.viewDetails.recyclerView.stickyItemDecoration.StickRvActivity" />
+        <activity android:name=".model.viewDetails.recyclerView.stickyItemDecoration.StickXRvActivity" />
 
     </application>
 
