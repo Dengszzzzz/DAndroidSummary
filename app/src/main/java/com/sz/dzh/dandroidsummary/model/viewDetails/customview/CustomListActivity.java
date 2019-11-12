@@ -22,6 +22,7 @@ public class CustomListActivity extends BaseListShowActivity {
         addClazzBean("步骤指示器", VerticalStepViewActivity.class);
         addClazzBean("圆角or圆形图片", NiceImageActivity.class);
         addClazzBean("滑动面板",DragShowActivity.class);
+        addClazzBean("TextView指定位置省略",TextViewEllipsizeActivity.class);
 
 
         mAdapter.notifyDataSetChanged();

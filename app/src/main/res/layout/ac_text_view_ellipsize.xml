@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/top_view"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Android中可以通过 android:ellipsize=来指定文字过长时的省略方式"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_size20"/>
+
+    <com.sz.dzh.dandroidsummary.widget.custom.EllipsizeTextView
+        android:id="@+id/tv_ellipsize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:lines="1"
+        android:textSize="@dimen/text_size20"/>
+
+</LinearLayout>

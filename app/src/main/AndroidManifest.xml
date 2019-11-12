@@ -256,6 +256,7 @@
         <activity android:name=".model.viewDetails.recyclerView.RecyclerViewListActivity" />
         <activity android:name=".model.viewDetails.recyclerView.stickyItemDecoration.StickRvActivity" />
         <activity android:name=".model.viewDetails.recyclerView.stickyItemDecoration.StickXRvActivity" />
+        <activity android:name=".model.viewDetails.customview.TextViewEllipsizeActivity" />
 
     </application>
 
